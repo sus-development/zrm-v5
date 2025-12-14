@@ -337,6 +337,27 @@ func _input(event):
 	match GamemodeManager.GAMEMODE:
 		-1:
 			if GamemodeManager.MODGAME["allow_weapons"]:
+				
+			# HACK HACK HACK Самый простой выбор оружия циферками
+				if event.is_action_pressed("1weapon"):
+						WEAPONS[SELECTED_WEAPON]["left_bullets"] = BULLETS
+						SELECTED_WEAPON = 0
+						weaponhint_show()
+						BULLETS = WEAPONS[SELECTED_WEAPON]["left_bullets"]
+						print(SELECTED_WEAPON)
+				elif event.is_action_pressed("2weapon"):
+						WEAPONS[SELECTED_WEAPON]["left_bullets"] = BULLETS
+						SELECTED_WEAPON = 1
+						weaponhint_show()
+						BULLETS = WEAPONS[SELECTED_WEAPON]["left_bullets"]
+						print(SELECTED_WEAPON)
+				elif event.is_action_pressed("3weapon"):
+						WEAPONS[SELECTED_WEAPON]["left_bullets"] = BULLETS
+						SELECTED_WEAPON = 2
+						weaponhint_show()
+						BULLETS = WEAPONS[SELECTED_WEAPON]["left_bullets"]
+						print(SELECTED_WEAPON)
+				
 				if event.is_action_pressed("nextweapon"):
 					if SELECTED_WEAPON + 1 >= WEAPONS.size():
 						WEAPONS[SELECTED_WEAPON]["left_bullets"] = BULLETS
@@ -368,6 +389,26 @@ func _input(event):
 		1: 
 			pass
 		_:	
+			# HACK HACK HACK Самый простой выбор оружия циферками
+			if event.is_action_pressed("1weapon"):
+					WEAPONS[SELECTED_WEAPON]["left_bullets"] = BULLETS
+					SELECTED_WEAPON = 0
+					weaponhint_show()
+					BULLETS = WEAPONS[SELECTED_WEAPON]["left_bullets"]
+					print(SELECTED_WEAPON)
+			elif event.is_action_pressed("2weapon"):
+					WEAPONS[SELECTED_WEAPON]["left_bullets"] = BULLETS
+					SELECTED_WEAPON = 1
+					weaponhint_show()
+					BULLETS = WEAPONS[SELECTED_WEAPON]["left_bullets"]
+					print(SELECTED_WEAPON)
+			elif event.is_action_pressed("3weapon"):
+					WEAPONS[SELECTED_WEAPON]["left_bullets"] = BULLETS
+					SELECTED_WEAPON = 2
+					weaponhint_show()
+					BULLETS = WEAPONS[SELECTED_WEAPON]["left_bullets"]
+					print(SELECTED_WEAPON)
+			
 			if event.is_action_pressed("nextweapon"):
 				if SELECTED_WEAPON + 1 >= WEAPONS.size():
 					WEAPONS[SELECTED_WEAPON]["left_bullets"] = BULLETS
