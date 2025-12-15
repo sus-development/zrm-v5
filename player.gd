@@ -373,9 +373,9 @@ func _input(event):
 					
 			if event.is_action_pressed("previousweapon"):
 				if SELECTED_WEAPON - 1 < 0:
-					changeweapon(SELECTED_WEAPON-1)
+					changeweapon(WEAPONS.size()-1)
 				else:
-					changeweapon(0)
+					changeweapon(SELECTED_WEAPON-1)
 					
 func changeweapon(number: int = 0):
 	if number > WEAPONS.size() - 1:

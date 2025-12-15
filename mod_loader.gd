@@ -65,24 +65,28 @@ func _process(delta: float) -> void:
 	pass
 
 func get_mod_img(path):
-	var file = FileAccess.open(path, FileAccess.READ)
-	if not file:
-		return ModLoader.MOD_IMG_ERROR
-
-	var image_data = file.get_buffer(file.get_length())
-	file.close()
-
-	var image = Image.new()
-	var error: Error
-	if path.get_extension().to_lower() == "png":
-		error = image.load_png_from_buffer(image_data)
-	elif path.get_extension().to_lower() in ["jpg", "jpeg"]:
-		error = image.load_jpg_from_buffer(image_data)
+	if path.begins_with("res://"):
+		var texture = ResourceLoader.load(path)
+		return texture
 	else:
-		return ModLoader.MOD_IMG_ERROR
+		var file = FileAccess.open(path, FileAccess.READ)
+		if not file:
+			return ModLoader.MOD_IMG_ERROR
 
-	if error != OK:
-		return ModLoader.MOD_IMG_ERROR
+		var image_data = file.get_buffer(file.get_length())
+		file.close()
 
-	var texture = ImageTexture.create_from_image(image)
-	return texture
+		var image = Image.new()
+		var error: Error
+		if path.get_extension().to_lower() == "png":
+			error = image.load_png_from_buffer(image_data)
+		elif path.get_extension().to_lower() in ["jpg", "jpeg"]:
+			error = image.load_jpg_from_buffer(image_data)
+		else:
+			return ModLoader.MOD_IMG_ERROR
+
+		if error != OK:
+			return ModLoader.MOD_IMG_ERROR
+
+		var texture = ImageTexture.create_from_image(image)
+		return texture

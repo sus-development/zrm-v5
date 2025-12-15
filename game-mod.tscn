@@ -14,11 +14,11 @@
 [ext_resource type="Texture2D" uid="uid://bnoiah2jgxblr" path="res://Resources/aims/default.png" id="9_vef74"]
 [ext_resource type="Script" uid="uid://oer2u1m0p56i" path="res://aim-ingame.gd" id="10_hve3p"]
 
-[sub_resource type="NavigationPolygon" id="NavigationPolygon_hve3p"]
-vertices = PackedVector2Array(4975, 4974.99, 25, 4974, 25, 25, 4975, 25)
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_fn4k2"]
+vertices = PackedVector2Array(5518.9297, -454.03125, 5482.0625, 5479.9766, -409.04688, 5474.008, -441.9375, -475.96094)
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
-outlines = Array[PackedVector2Array]([PackedVector2Array(0, 0, 0, 4999, 5000, 5000, 5000, 0)])
-agent_radius = 25.0
+outlines = Array[PackedVector2Array]([PackedVector2Array(5492, 5490, -419, 5484, -452, -486, 5529, -464)])
+sample_partition_type = 1
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_v4flc"]
 blend_mode = 3
@@ -33,7 +33,7 @@ process_mode = 3
 script = ExtResource("1_6olua")
 
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
-navigation_polygon = SubResource("NavigationPolygon_hve3p")
+navigation_polygon = SubResource("NavigationPolygon_fn4k2")
 
 [node name="grass" type="Sprite2D" parent="."]
 z_index = -3

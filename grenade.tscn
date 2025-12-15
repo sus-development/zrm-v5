@@ -833,7 +833,7 @@ scale = Vector2(31.614319, 31.614319)
 shape = SubResource("CircleShape2D_o1udh")
 
 [node name="ShakeArea" type="Area2D" parent="."]
-scale = Vector2(1.9992211, 1.9992211)
+scale = Vector2(0.79528135, 0.79528135)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ShakeArea"]
 scale = Vector2(56.930748, 56.930748)
