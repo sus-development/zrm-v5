@@ -293,7 +293,7 @@ func _input(event):
 			shoot()
 	if Input.is_action_pressed("shoot") and WEAPONS[SELECTED_WEAPON]["grenade"]:
 		grenade_target.global_position = get_global_mouse_position()
-		inthehall = true
+		inthehall = true # (-all +ole)
 	if Input.is_action_just_pressed("shoot") and WEAPONS[SELECTED_WEAPON]["grenade"] and WEAPONS[SELECTED_WEAPON]["left_bullets"] > 0:
 		$Pickup01.stream = GRENADE_PREPARE
 		$Pickup01.pitch_scale = randf_range(0.83, 1.06)
@@ -337,106 +337,55 @@ func _input(event):
 	match GamemodeManager.GAMEMODE:
 		-1:
 			if GamemodeManager.MODGAME["allow_weapons"]:
-				
-			# HACK HACK HACK Самый простой выбор оружия циферками
-				if event.is_action_pressed("1weapon"):
-						WEAPONS[SELECTED_WEAPON]["left_bullets"] = BULLETS
-						SELECTED_WEAPON = 0
-						weaponhint_show()
-						BULLETS = WEAPONS[SELECTED_WEAPON]["left_bullets"]
-						print(SELECTED_WEAPON)
-				elif event.is_action_pressed("2weapon"):
-						WEAPONS[SELECTED_WEAPON]["left_bullets"] = BULLETS
-						SELECTED_WEAPON = 1
-						weaponhint_show()
-						BULLETS = WEAPONS[SELECTED_WEAPON]["left_bullets"]
-						print(SELECTED_WEAPON)
-				elif event.is_action_pressed("3weapon"):
-						WEAPONS[SELECTED_WEAPON]["left_bullets"] = BULLETS
-						SELECTED_WEAPON = 2
-						weaponhint_show()
-						BULLETS = WEAPONS[SELECTED_WEAPON]["left_bullets"]
-						print(SELECTED_WEAPON)
-				
+			# HACK HACK HACK Самый простой выбор оружия циферками (g)
+			# 3.14sd:fearful:c			
+				if event.is_pressed() and event is InputEventKey:
+					for i in range(10):
+						if event.keycode == KEY_0 + i:
+							changeweapon(i-1)
+							break
 				if event.is_action_pressed("nextweapon"):
 					if SELECTED_WEAPON + 1 >= WEAPONS.size():
-						WEAPONS[SELECTED_WEAPON]["left_bullets"] = BULLETS
-						SELECTED_WEAPON = 0
-						weaponhint_show()
-						BULLETS = WEAPONS[SELECTED_WEAPON]["left_bullets"]
-						print(SELECTED_WEAPON)
+						changeweapon(0)
 					else:
-						WEAPONS[SELECTED_WEAPON]["left_bullets"] = BULLETS
-						SELECTED_WEAPON += 1
-						weaponhint_show()
-						BULLETS = WEAPONS[SELECTED_WEAPON]["left_bullets"]
-						print(SELECTED_WEAPON)		
+						changeweapon(SELECTED_WEAPON+1)
+						
 				if event.is_action_pressed("previousweapon"):
 					if SELECTED_WEAPON - 1 < 0:
-						WEAPONS[SELECTED_WEAPON]["left_bullets"] = BULLETS
-						SELECTED_WEAPON = WEAPONS.size() - 1
-						weaponhint_show()
-						BULLETS = WEAPONS[SELECTED_WEAPON]["left_bullets"]
-						print(SELECTED_WEAPON)
+						changeweapon(SELECTED_WEAPON-1)
 					else:
-						WEAPONS[SELECTED_WEAPON]["left_bullets"] = BULLETS
-						SELECTED_WEAPON -= 1
-						weaponhint_show()
-						BULLETS = WEAPONS[SELECTED_WEAPON]["left_bullets"]
-						print(SELECTED_WEAPON)
+						changeweapon(0)
 			else:
 				pass
 		1: 
 			pass
-		_:	
-			# HACK HACK HACK Самый простой выбор оружия циферками
-			if event.is_action_pressed("1weapon"):
-					WEAPONS[SELECTED_WEAPON]["left_bullets"] = BULLETS
-					SELECTED_WEAPON = 0
-					weaponhint_show()
-					BULLETS = WEAPONS[SELECTED_WEAPON]["left_bullets"]
-					print(SELECTED_WEAPON)
-			elif event.is_action_pressed("2weapon"):
-					WEAPONS[SELECTED_WEAPON]["left_bullets"] = BULLETS
-					SELECTED_WEAPON = 1
-					weaponhint_show()
-					BULLETS = WEAPONS[SELECTED_WEAPON]["left_bullets"]
-					print(SELECTED_WEAPON)
-			elif event.is_action_pressed("3weapon"):
-					WEAPONS[SELECTED_WEAPON]["left_bullets"] = BULLETS
-					SELECTED_WEAPON = 2
-					weaponhint_show()
-					BULLETS = WEAPONS[SELECTED_WEAPON]["left_bullets"]
-					print(SELECTED_WEAPON)
-			
+		_:			
+			if event.is_pressed() and event is InputEventKey:
+				for i in range(10):
+					if event.keycode == KEY_0 + i:
+						changeweapon(i-1)
+						break
 			if event.is_action_pressed("nextweapon"):
 				if SELECTED_WEAPON + 1 >= WEAPONS.size():
-					WEAPONS[SELECTED_WEAPON]["left_bullets"] = BULLETS
-					SELECTED_WEAPON = 0
-					weaponhint_show()
-					BULLETS = WEAPONS[SELECTED_WEAPON]["left_bullets"]
-					print(SELECTED_WEAPON)
+					changeweapon(0)
 				else:
-					WEAPONS[SELECTED_WEAPON]["left_bullets"] = BULLETS
-					SELECTED_WEAPON += 1
-					weaponhint_show()
-					BULLETS = WEAPONS[SELECTED_WEAPON]["left_bullets"]
-					print(SELECTED_WEAPON)
+					changeweapon(SELECTED_WEAPON+1)
 					
 			if event.is_action_pressed("previousweapon"):
 				if SELECTED_WEAPON - 1 < 0:
-					WEAPONS[SELECTED_WEAPON]["left_bullets"] = BULLETS
-					SELECTED_WEAPON = WEAPONS.size() - 1
-					weaponhint_show()
-					BULLETS = WEAPONS[SELECTED_WEAPON]["left_bullets"]
-					print(SELECTED_WEAPON)
+					changeweapon(SELECTED_WEAPON-1)
 				else:
-					WEAPONS[SELECTED_WEAPON]["left_bullets"] = BULLETS
-					SELECTED_WEAPON -= 1
-					weaponhint_show()
-					BULLETS = WEAPONS[SELECTED_WEAPON]["left_bullets"]
-					print(SELECTED_WEAPON)
+					changeweapon(0)
 					
+func changeweapon(number: int = 0):
+	if number > WEAPONS.size() - 1:
+		pass
+	else:
+		WEAPONS[SELECTED_WEAPON]["left_bullets"] = BULLETS
+		SELECTED_WEAPON = number
+		weaponhint_show()
+		BULLETS = WEAPONS[SELECTED_WEAPON]["left_bullets"]
+		print(SELECTED_WEAPON)
 
 		
 	
