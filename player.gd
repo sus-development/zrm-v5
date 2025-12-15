@@ -115,7 +115,7 @@ func _ready() -> void:
 			health_bar.max_value = int(GamemodeManager.MODGAME["player_health"])
 			HEALTH = int(GamemodeManager.MODGAME["player_health"])
 	weaponhint_show()
-	print("GAMEMODE IS " + str(GamemodeManager.GAMEMODE))
+
 
 func _physics_process(delta: float):
 	#TranslationServer.set_locale("be")
