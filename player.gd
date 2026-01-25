@@ -69,7 +69,8 @@ var shake = false
 @export var P_BULLET = preload("res://bullet.tscn")
 @export var P_GRENADE = preload("uid://c52nnfwncwkti")
 @onready var grenade_target: Marker2D = $GrenadeTarget
-@export var max_range = 300 # у тракториста
+@export var max_range = 420
+var max_range2 = 0
 var inthehall = false
 @export var SELECTED_WEAPON = 0
 
@@ -114,6 +115,24 @@ func _ready() -> void:
 			MAX_HEALTH = int(GamemodeManager.MODGAME["player_health"])
 			health_bar.max_value = int(GamemodeManager.MODGAME["player_health"])
 			HEALTH = int(GamemodeManager.MODGAME["player_health"])
+	match GamemodeManager.GAMEMODE:
+		2:
+			pass
+		1:
+			if health_bar:
+				health_bar.queue_free()
+			if kaktameto_bar:
+				kaktameto_bar.queue_free()
+			if inventory_bar:
+				inventory_bar.queue_free()
+			if coldness_bar:
+				coldness_bar.queue_free()
+			bullets_bar.position = Vector2(30, 3)
+		_:
+			if inventory_bar:
+				inventory_bar.queue_free()
+			if coldness_bar:
+				coldness_bar.queue_free()
 	weaponhint_show()
 
 
@@ -262,31 +281,12 @@ func _process(delta: float):
 		ratata()	
 
 func ratata():
-	if !WEAPONS[SELECTED_WEAPON]["automatic"]:
+	if !WEAPONS[SELECTED_WEAPON]["automatic"] or WEAPONS[SELECTED_WEAPON]["grenade"]:
 		return
 	if BULLETS > 0 and DELAY >= WEAPONS[SELECTED_WEAPON]["delay"]:
 		shoot()
 	
 func _input(event):
-	match GamemodeManager.GAMEMODE:
-		2:
-			pass
-		1:
-			if health_bar:
-				health_bar.queue_free()
-			if kaktameto_bar:
-				kaktameto_bar.queue_free()
-			if inventory_bar:
-				inventory_bar.queue_free()
-			if coldness_bar:
-				coldness_bar.queue_free()
-			bullets_bar.position = Vector2(30, 3)
-		_:
-			if inventory_bar:
-				inventory_bar.queue_free()
-			if coldness_bar:
-				coldness_bar.queue_free()
-	
 	
 	if event.is_action_pressed("shoot") and !WEAPONS[SELECTED_WEAPON]["grenade"]:
 		if (OS.get_name() != "Android"):
@@ -294,9 +294,10 @@ func _input(event):
 	if Input.is_action_pressed("shoot") and WEAPONS[SELECTED_WEAPON]["grenade"]:
 		grenade_target.global_position = get_global_mouse_position()
 		inthehall = true # (-all +ole)
-	if Input.is_action_just_pressed("shoot") and WEAPONS[SELECTED_WEAPON]["grenade"] and WEAPONS[SELECTED_WEAPON]["left_bullets"] > 0:
+	if Input.is_action_just_pressed("shoot") and WEAPONS[SELECTED_WEAPON]["grenade"] and BULLETS > 0:
 		$Pickup01.stream = GRENADE_PREPARE
 		$Pickup01.pitch_scale = randf_range(0.83, 1.06)
+		max_range2 = max_range + randf_range(0, 50)
 		$Pickup01.play()
 	if Input.is_action_just_released("shoot") and inthehall and WEAPONS[SELECTED_WEAPON]["grenade"]:
 		throw()
@@ -415,6 +416,9 @@ func throw():
 	if BULLETS != 0:
 		if DELAY >= WEAPONS[SELECTED_WEAPON]["delay"]:
 			var grenade = P_GRENADE.instantiate()
+			var targetdir = $GrenadeTarget.global_position - global_position 
+			if targetdir.length() > max_range2:
+				$GrenadeTarget.global_position = global_position + targetdir.limit_length(max_range2)
 			grenade.global_position = $Marker2D.global_position
 			grenade.global_rotation = global_rotation + randf_range(0.9, 1.1)
 			get_parent().add_child(grenade)
@@ -468,27 +472,7 @@ func _on_walkdelay_timeout() -> void:
 			$GrassStep01.pitch_scale = randf_range(0.93, 1.04)
 		else:
 			$GrassStep01.pitch_scale = randf_range(0.96, 1.02)
-		match randi_range(1,4):
-			1:
-				if GamemodeManager.GAMEMODE == 2 or ((GamemodeManager.GAMEMODE == 0 or GamemodeManager.GAMEMODE == 1) or (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["snowinwinter"]) and month >= 12 or month <= 01) or (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["force_snow"]):
-					$GrassStep01.stream = SNOW_STEP_01
-				else:
-					$GrassStep01.stream = GRASS_STEP_01
-			2:
-				if GamemodeManager.GAMEMODE == 2 or ((GamemodeManager.GAMEMODE == 0 or GamemodeManager.GAMEMODE == 1) or (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["snowinwinter"]) and month >= 12 or month <= 01) or (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["force_snow"]):
-					$GrassStep01.stream = SNOW_STEP_02
-				else:
-					$GrassStep01.stream = GRASS_STEP_02
-			3:
-				if GamemodeManager.GAMEMODE == 2 or ((GamemodeManager.GAMEMODE == 0 or GamemodeManager.GAMEMODE == 1) or (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["snowinwinter"]) and month >= 12 or month <= 01) or (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["force_snow"]):
-					$GrassStep01.stream = SNOW_STEP_03
-				else:
-					$GrassStep01.stream = GRASS_STEP_03
-			4:
-				if GamemodeManager.GAMEMODE == 2 or ((GamemodeManager.GAMEMODE == 0 or GamemodeManager.GAMEMODE == 1) or (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["snowinwinter"]) and month >= 12 or month <= 01) or (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["force_snow"]):
-					$GrassStep01.stream = SNOW_STEP_04
-				else:
-					$GrassStep01.stream = GRASS_STEP_04
+		step_sound()
 		$GrassStep01.play()
 	elif (Input.is_action_pressed("up") or Input.is_action_pressed("down") or Input.is_action_pressed("left") or Input.is_action_pressed("right")):
 		$WalkDelay.wait_time = randf_range((clamp(0.24 + (INVENTORY_FILLED*0.0045), 0.10, 0.60)),(clamp(0.27 + (INVENTORY_FILLED*0.0050), 0.10, 0.60)))
@@ -498,29 +482,31 @@ func _on_walkdelay_timeout() -> void:
 		else:
 			$GrassStep01.pitch_scale = randf_range(0.91, 1.06)
 			$GrassStep01.volume_db = randf_range(-5, -3)
-		match randi_range(1,4):
-			1:
-				if GamemodeManager.GAMEMODE == 2 or ((GamemodeManager.GAMEMODE == 0 or GamemodeManager.GAMEMODE == 1) or (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["snowinwinter"]) and month >= 12 or month <= 01) or (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["force_snow"]):
-					$GrassStep01.stream = SNOW_STEP_01
-				else:
-					$GrassStep01.stream = GRASS_STEP_01
-			2:
-				if GamemodeManager.GAMEMODE == 2 or ((GamemodeManager.GAMEMODE == 0 or GamemodeManager.GAMEMODE == 1) or (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["snowinwinter"]) and month >= 12 or month <= 01) or (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["force_snow"]):
-					$GrassStep01.stream = SNOW_STEP_02
-				else:
-					$GrassStep01.stream = GRASS_STEP_02
-			3:
-				if GamemodeManager.GAMEMODE == 2 or ((GamemodeManager.GAMEMODE == 0 or GamemodeManager.GAMEMODE == 1) or (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["snowinwinter"]) and month >= 12 or month <= 01) or (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["force_snow"]):
-					$GrassStep01.stream = SNOW_STEP_03
-				else:
-					$GrassStep01.stream = GRASS_STEP_03
-			4:
-				if GamemodeManager.GAMEMODE == 2 or ((GamemodeManager.GAMEMODE == 0 or GamemodeManager.GAMEMODE == 1) or (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["snowinwinter"]) and month >= 12 or month <= 01) or (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["force_snow"]):
-					$GrassStep01.stream = SNOW_STEP_04
-				else:
-					$GrassStep01.stream = GRASS_STEP_04
+		step_sound()
 		$GrassStep01.play()
 
+func step_sound():
+	match randi_range(1,4):
+		1:
+			if GamemodeManager.GAMEMODE == 2 or ((GamemodeManager.GAMEMODE == 0 or GamemodeManager.GAMEMODE == 1) or (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["snowinwinter"]) and month >= 12 or month <= 01) or (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["force_snow"]):
+				$GrassStep01.stream = SNOW_STEP_01
+			else:
+				$GrassStep01.stream = GRASS_STEP_01
+		2:
+			if GamemodeManager.GAMEMODE == 2 or ((GamemodeManager.GAMEMODE == 0 or GamemodeManager.GAMEMODE == 1) or (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["snowinwinter"]) and month >= 12 or month <= 01) or (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["force_snow"]):
+				$GrassStep01.stream = SNOW_STEP_02
+			else:
+				$GrassStep01.stream = GRASS_STEP_02
+		3:
+			if GamemodeManager.GAMEMODE == 2 or ((GamemodeManager.GAMEMODE == 0 or GamemodeManager.GAMEMODE == 1) or (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["snowinwinter"]) and month >= 12 or month <= 01) or (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["force_snow"]):
+				$GrassStep01.stream = SNOW_STEP_03
+			else:
+				$GrassStep01.stream = GRASS_STEP_03
+		4:
+			if GamemodeManager.GAMEMODE == 2 or ((GamemodeManager.GAMEMODE == 0 or GamemodeManager.GAMEMODE == 1) or (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["snowinwinter"]) and month >= 12 or month <= 01) or (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["force_snow"]):
+				$GrassStep01.stream = SNOW_STEP_04
+			else:
+				$GrassStep01.stream = GRASS_STEP_04	
 func weaponhint_show():
 	match GamemodeManager.GAMEMODE:
 		-1:
@@ -537,7 +523,7 @@ func weaponhint_show():
 					if HINT_TWEEN and HINT_TWEEN.is_valid():
 						HINT_TWEEN.kill()
 					HINT_TWEEN = get_tree().create_tween()
-					HINT_TWEEN.tween_property(weapon_text, "modulate:a", 0, 4)
+					HINT_TWEEN.tween_property(weapon_text, "modulate:a", 0, 4).set_trans(Tween.TRANS_QUART)
 					HINT_TWEEN.play()
 		1:
 			pass
@@ -553,7 +539,7 @@ func weaponhint_show():
 				if HINT_TWEEN and HINT_TWEEN.is_valid():
 					HINT_TWEEN.kill()
 				HINT_TWEEN = get_tree().create_tween()
-				HINT_TWEEN.tween_property(weapon_text, "modulate:a", 0, 4)
+				HINT_TWEEN.tween_property(weapon_text, "modulate:a", 0, 4).set_trans(Tween.TRANS_QUART)
 				HINT_TWEEN.play()
 			else:
 				pass

@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://d1es6dbs7uaad"]
+[gd_scene load_steps=15 format=3 uid="uid://d1es6dbs7uaad"]
 
 [ext_resource type="Script" uid="uid://ba1djtv0bo560" path="res://pause_manager.gd" id="1_6olua"]
 [ext_resource type="Texture2D" uid="uid://c0gku65b6ujhb" path="res://Resources/grass.png" id="1_ictw6"]
@@ -18,6 +18,17 @@ vertices = PackedVector2Array(5518.9297, -454.03125, 5482.0625, 5479.9766, -409.
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(5492, 5490, -419, 5484, -452, -486, 5529, -464)])
 sample_partition_type = 1
+
+[sub_resource type="Environment" id="Environment_iotsf"]
+background_mode = 3
+glow_enabled = true
+glow_levels/2 = 1.65
+glow_levels/6 = 0.65
+glow_normalized = true
+glow_bloom = 0.56
+glow_map_strength = 0.75
+adjustment_enabled = true
+adjustment_brightness = 0.7
 
 [node name="game" type="Node2D"]
 
@@ -81,5 +92,8 @@ position = Vector2(338, 331)
 scale = Vector2(0.257215, 0.255968)
 texture = ExtResource("9_vef74")
 script = ExtResource("10_hve3p")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_iotsf")
 
 [connection signal="timeout" from="Timer" to="Timer" method="_on_timeout"]

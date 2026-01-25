@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://bo7fjaj74k005"]
+[gd_scene load_steps=27 format=3 uid="uid://bo7fjaj74k005"]
 
 [ext_resource type="Script" uid="uid://ba1djtv0bo560" path="res://pause_manager.gd" id="1_6olua"]
 [ext_resource type="PackedScene" uid="uid://bgd4is08hm4yv" path="res://player.tscn" id="1_thl6f"]
@@ -20,9 +20,13 @@
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_bo1a3"]
 blend_mode = 1
-light_mode = 1
+particles_animation = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_8k8hu"]
+blend_mode = 3
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_kwlxl"]
 vertices = PackedVector2Array(5518.9297, -454.03125, 5482.0625, 5479.9766, -409.04688, 5474.008, -441.9375, -475.96094)
@@ -105,6 +109,21 @@ func _ready() -> void:
 	play(\"clouds\")
 "
 
+[sub_resource type="Environment" id="Environment_kwlxl"]
+background_mode = 3
+tonemap_mode = 1
+tonemap_white = 0.44
+glow_enabled = true
+glow_levels/1 = 26.2
+glow_levels/2 = 1.65
+glow_levels/6 = 0.65
+glow_normalized = true
+glow_intensity = 1.74
+glow_bloom = 0.76
+glow_map_strength = 0.75
+adjustment_enabled = true
+adjustment_brightness = 0.28
+
 [node name="game" type="Node2D"]
 
 [node name="UI" parent="." instance=ExtResource("4_t63fs")]
@@ -122,7 +141,7 @@ process_mode = 3
 script = ExtResource("1_6olua")
 
 [node name="AmbientColor" type="ColorRect" parent="."]
-modulate = Color(0.053295396, 0.062288336, 0.066790454, 0.54901963)
+modulate = Color(0.40441266, 0.43320322, 0.44761997, 0.54901963)
 show_behind_parent = true
 clip_children = 2
 light_mask = 2
@@ -469,6 +488,9 @@ stream = ExtResource("17_kwlxl")
 volume_db = -2.537
 autoplay = true
 max_distance = 4096.0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_kwlxl")
 
 [connection signal="timeout" from="Timer" to="Timer" method="_on_timeout"]
 [connection signal="timeout" from="WinterTimer" to="Campfire" method="_on_timer_timeout"]
