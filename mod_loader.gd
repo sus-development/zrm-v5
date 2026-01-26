@@ -22,7 +22,7 @@ func load_mods() -> void:
 		var json = JSON.new()
 		var tmp_mod = json.parse_string(file.get_as_text())
 		
-		print(str(tmp_mod))
+		#print(str(tmp_mod))
 		
 		if tmp_mod == null:
 			var modpath = "user://mods/" + MODSLIST[sus]
@@ -43,8 +43,8 @@ func load_mods() -> void:
 		
 		# 03/12/25 - когда там в последний раз модлоадер обновлялся? 
 		
-		print("MOD GAMEMODES:")
-		print(MODGAMEMODES)
+		#print("MOD GAMEMODES:")
+		#print(MODGAMEMODES)
 		
 		print("--")
 		
