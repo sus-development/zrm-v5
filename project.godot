@@ -8,13 +8,17 @@
 
 config_version=5
 
+[animation]
+
+compatibility/default_parent_skeleton_in_mesh_instance_3d=true
+
 [application]
 
 config/name="Zurvival Remastered"
 config/version="2.0.260 Demo!"
 run/main_scene="res://menu.tscn"
-config/features=PackedStringArray("4.5", "Forward Plus")
-boot_splash/fullsize=false
+config/features=PackedStringArray("4.6", "Forward Plus")
+boot_splash/stretch_mode=0
 boot_splash/use_filter=false
 boot_splash/image="uid://crqpy6n5f8ekg"
 config/icon="uid://bq517y5c4o7dw"
@@ -172,5 +176,5 @@ renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
 textures/vram_compression/import_etc2_astc=true
 anti_aliasing/quality/msaa_2d=1
-anti_aliasing/quality/screen_space_aa=1
 anti_aliasing/quality/use_debanding=true
+anti_aliasing/quality/screen_space_aa=1

@@ -109,6 +109,8 @@ var WEAPONS = [
 
 func _ready() -> void:
 	if GamemodeManager.GAMEMODE == -1:
+		print("forcesnow: " + str(GamemodeManager.MODGAME["force_snow"]))
+		print("snowinwinter: " + str(GamemodeManager.MODGAME["snowinwinter"]))
 		if !GamemodeManager.MODGAME.has("player_health") or GamemodeManager.MODGAME["player_health"] == "default":
 			HEALTH = MAX_HEALTH
 		else:
@@ -488,22 +490,22 @@ func _on_walkdelay_timeout() -> void:
 func step_sound():
 	match randi_range(1,4):
 		1:
-			if GamemodeManager.GAMEMODE == 2 or ((GamemodeManager.GAMEMODE == 0 or GamemodeManager.GAMEMODE == 1) or (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["snowinwinter"]) and month >= 12 or month <= 01) or (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["force_snow"]):
+			if  (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["force_snow"]) or (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["snowinwinter"] and (month >= 12 or month <= 01)) or ((GamemodeManager.GAMEMODE != -1 and GamemodeManager.GAMEMODE != 2)  and (month >= 12 or month <= 01)):
 				$GrassStep01.stream = SNOW_STEP_01
 			else:
 				$GrassStep01.stream = GRASS_STEP_01
 		2:
-			if GamemodeManager.GAMEMODE == 2 or ((GamemodeManager.GAMEMODE == 0 or GamemodeManager.GAMEMODE == 1) or (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["snowinwinter"]) and month >= 12 or month <= 01) or (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["force_snow"]):
+			if  (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["force_snow"]) or (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["snowinwinter"] and (month >= 12 or month <= 01)) or ((GamemodeManager.GAMEMODE != -1 and GamemodeManager.GAMEMODE != 2)  and (month >= 12 or month <= 01)):
 				$GrassStep01.stream = SNOW_STEP_02
 			else:
 				$GrassStep01.stream = GRASS_STEP_02
 		3:
-			if GamemodeManager.GAMEMODE == 2 or ((GamemodeManager.GAMEMODE == 0 or GamemodeManager.GAMEMODE == 1) or (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["snowinwinter"]) and month >= 12 or month <= 01) or (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["force_snow"]):
+			if  (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["force_snow"]) or (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["snowinwinter"] and (month >= 12 or month <= 01)) or ((GamemodeManager.GAMEMODE != -1 and GamemodeManager.GAMEMODE != 2)  and (month >= 12 or month <= 01)):
 				$GrassStep01.stream = SNOW_STEP_03
 			else:
 				$GrassStep01.stream = GRASS_STEP_03
 		4:
-			if GamemodeManager.GAMEMODE == 2 or ((GamemodeManager.GAMEMODE == 0 or GamemodeManager.GAMEMODE == 1) or (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["snowinwinter"]) and month >= 12 or month <= 01) or (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["force_snow"]):
+			if  (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["force_snow"]) or (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["snowinwinter"] and (month >= 12 or month <= 01)) or ((GamemodeManager.GAMEMODE != -1 and GamemodeManager.GAMEMODE != 2)  and (month >= 12 or month <= 01)):
 				$GrassStep01.stream = SNOW_STEP_04
 			else:
 				$GrassStep01.stream = GRASS_STEP_04	
