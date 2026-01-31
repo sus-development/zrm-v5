@@ -50,7 +50,6 @@ func _ready() -> void:
 		newbtn.SCENE = GAMEMODES[sus]["scene"]
 		newbtn.GMODE = GAMEMODES[sus]["gamemode"]
 		newbtn.MODGAME = null
-
 		$Control/Panel/ScrollContainer/VBoxContainer.add_child(newbtn)
 		
 	for susgame in MODDED_GAMEMODES.size():
@@ -61,7 +60,6 @@ func _ready() -> void:
 		newbtn.SCENE = "res://game-mod.tscn"
 		newbtn.MODGAME = susgame
 		newbtn.GMODE = -1
-		
 		$Control/Panel/ScrollContainer/VBoxContainer.add_child(newbtn)
 		pass
 	if not transition.imfinished.is_connected(Global.got_finishedsign):
@@ -88,6 +86,14 @@ func _on_play_button_pressed() -> void:
 		pass
 	else:
 		GamemodeManager.MODGAME = MODDED_GAMEMODES[MODGAME].duplicate(true)
+	# HACK -- 31/01/26
+	GamemodeManager.GAMEMODEINFO = {
+			"scene": GMCHANGE_TO,
+			"gamemode": GamemodeManager.GAMEMODE,
+		}
+
+	
+	print("gamemode info: " + str(GamemodeManager.GAMEMODEINFO))	
 	get_tree().change_scene_to_file(GMCHANGE_TO)
 	
 func change_info():
