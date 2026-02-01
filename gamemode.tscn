@@ -1,16 +1,16 @@
-[gd_scene load_steps=5 format=3 uid="uid://bpgtpnc1odi4f"]
+[gd_scene format=3 uid="uid://bpgtpnc1odi4f"]
 
 [ext_resource type="PackedScene" uid="uid://db8yny8uiwun1" path="res://background.tscn" id="1_gxgwd"]
 [ext_resource type="Script" uid="uid://bcvdhtfrjqpw8" path="res://gamemode.gd" id="1_x7xra"]
 [ext_resource type="Theme" uid="uid://d2wr8qi0mdxxq" path="res://ui.tres" id="2_7rmfm"]
 [ext_resource type="Script" uid="uid://beg25d2qybjtl" path="res://transitionmenu.gd" id="4_wc7w4"]
 
-[node name="gamemode" type="Node2D"]
+[node name="gamemode" type="Node2D" unique_id=268884075]
 script = ExtResource("1_x7xra")
 
-[node name="Background" parent="." instance=ExtResource("1_gxgwd")]
+[node name="Background" parent="." unique_id=1198376867 instance=ExtResource("1_gxgwd")]
 
-[node name="Control" type="Control" parent="."]
+[node name="Control" type="Control" parent="." unique_id=886379625]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -24,7 +24,7 @@ grow_vertical = 2
 theme = ExtResource("2_7rmfm")
 script = ExtResource("4_wc7w4")
 
-[node name="Panel" type="Panel" parent="Control"]
+[node name="Panel" type="Panel" parent="Control" unique_id=248070892]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -38,7 +38,7 @@ offset_bottom = 196.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ScrollContainer" type="ScrollContainer" parent="Control/Panel"]
+[node name="ScrollContainer" type="ScrollContainer" parent="Control/Panel" unique_id=132652580]
 layout_mode = 0
 offset_left = 2.0
 offset_top = 33.0
@@ -46,33 +46,36 @@ offset_right = 403.0
 offset_bottom = 236.0
 theme = ExtResource("2_7rmfm")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Control/Panel/ScrollContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/Panel/ScrollContainer" unique_id=30365681]
 custom_minimum_size = Vector2(390, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 alignment = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Control/Panel/ScrollContainer/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/Panel/ScrollContainer/VBoxContainer" unique_id=1539754359]
 layout_mode = 2
 size_flags_vertical = 4
 alignment = 1
 
-[node name="ShopButton" type="Button" parent="Control/Panel/ScrollContainer/VBoxContainer/HBoxContainer"]
+[node name="ShopButton" type="Button" parent="Control/Panel/ScrollContainer/VBoxContainer/HBoxContainer" unique_id=1951318806]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "$shop"
 
-[node name="StorageButton" type="Button" parent="Control/Panel/ScrollContainer/VBoxContainer/HBoxContainer"]
+[node name="StorageButton" type="Button" parent="Control/Panel/ScrollContainer/VBoxContainer/HBoxContainer" unique_id=524540969]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "$storage"
 
-[node name="HSeparator" type="HSeparator" parent="Control/Panel/ScrollContainer/VBoxContainer"]
+[node name="ChallengeContainer" type="HBoxContainer" parent="Control/Panel/ScrollContainer/VBoxContainer" unique_id=507438811]
+layout_mode = 2
+
+[node name="HSeparator" type="HSeparator" parent="Control/Panel/ScrollContainer/VBoxContainer" unique_id=1072681370]
 clip_contents = true
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Label" type="Label" parent="Control/Panel"]
+[node name="Label" type="Label" parent="Control/Panel" unique_id=1612497328]
 layout_mode = 0
 offset_right = 398.0
 offset_bottom = 31.0
@@ -82,7 +85,7 @@ text = "$gamemodeselect"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Back" type="Button" parent="Control/Panel"]
+[node name="Back" type="Button" parent="Control/Panel" unique_id=2129957151]
 layout_mode = 0
 offset_left = 2.0
 offset_top = 2.0
@@ -90,7 +93,7 @@ offset_right = 26.0
 offset_bottom = 31.0
 text = "<-"
 
-[node name="PlayButton" type="Button" parent="Control/Panel"]
+[node name="PlayButton" type="Button" parent="Control/Panel" unique_id=269637578]
 layout_mode = 0
 offset_left = 223.0
 offset_top = 357.0
@@ -99,7 +102,7 @@ offset_bottom = 388.0
 theme = ExtResource("2_7rmfm")
 text = "$play"
 
-[node name="gamemodename" type="Label" parent="Control/Panel"]
+[node name="gamemodename" type="Label" parent="Control/Panel" unique_id=1738598703]
 layout_mode = 0
 offset_left = 4.0
 offset_top = 237.0
@@ -109,7 +112,7 @@ theme_override_font_sizes/font_size = 23
 text = "$placeholdergmname"
 autowrap_mode = 3
 
-[node name="gamemodedesc" type="Label" parent="Control/Panel"]
+[node name="gamemodedesc" type="Label" parent="Control/Panel" unique_id=1314786487]
 layout_mode = 0
 offset_left = 4.0
 offset_top = 265.0
@@ -122,7 +125,7 @@ justification_flags = 138
 clip_text = true
 text_overrun_behavior = 2
 
-[node name="TransitionBlock" type="TextureRect" parent="."]
+[node name="TransitionBlock" type="TextureRect" parent="." unique_id=195401901]
 visible = false
 offset_right = 1280.0
 offset_bottom = 720.0

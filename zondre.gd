@@ -40,6 +40,21 @@ func _ready() -> void:
 			SPEED = DEFAULT_SPEED
 		else:
 			SPEED = int(GamemodeManager.MODGAME["zondre_speed"])
+			
+	if GamemodeManager.GAMEMODE == 3:
+		# дважды весело
+		var DATE = Time.get_date_string_from_system()
+		var RNG = RandomNumberGenerator.new()
+		DATE = int(str(DATE).replace("-", ""))
+		#print("date:" + str(hash(int(DATE/64))))
+		RNG.seed = hash(int(DATE))
+		var rngnum = RNG.randi_range(0, 4)
+		var rngnum2 = RNG.randi_range(0, 6)
+		if rngnum == 3:
+			SPEED = 380
+		if rngnum2 == 2:
+			DAMAGE = 20
+			
 func _physics_process(delta: float) -> void:
 	if HP <= 0:
 		$".".queue_free()

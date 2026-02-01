@@ -122,14 +122,14 @@ glow_intensity = 1.74
 glow_bloom = 0.79
 glow_map_strength = 0.75
 adjustment_enabled = true
-adjustment_brightness = 0.34
+adjustment_brightness = 0.53
 
 [node name="game" type="Node2D" unique_id=494643166]
 
 [node name="UI" parent="." unique_id=273427744 instance=ExtResource("4_t63fs")]
 
 [node name="CampfireLight" type="Sprite2D" parent="." unique_id=633582900]
-modulate = Color(1, 1, 1, 0.4)
+modulate = Color(1, 1, 1, 0.6666667)
 z_index = 2
 material = SubResource("CanvasItemMaterial_bo1a3")
 position = Vector2(2896, 1876)
@@ -141,7 +141,8 @@ process_mode = 3
 script = ExtResource("1_6olua")
 
 [node name="AmbientColor" type="ColorRect" parent="." unique_id=1965460238]
-modulate = Color(0.40441266, 0.43320322, 0.44761997, 0.54901963)
+modulate = Color(0.40443814, 0.432765, 0.44796598, 1)
+self_modulate = Color(1, 1, 1, 0.67058825)
 show_behind_parent = true
 clip_children = 2
 light_mask = 2
