@@ -11,8 +11,8 @@ var GAMEMODE = null
 
 # для удобства
 var CHALLENGE = {
-	"name": "Челленджи",
-	"description": tr("$standardmodedesc"),
+	"name": tr("$challenges"),
+	"description": tr("$challengesdesc"),
 	"scene": "res://game.tscn",
 	"gamemode": 3,
 }
