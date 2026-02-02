@@ -60,9 +60,9 @@ func _ready() -> void:
 		#print(rngnum3)
 		if rngnum == 3:
 			SPEED = 380
-		if rngnum2 == 2:
+		if rngnum2 == 2 or rngnum3 == 1:
 			DAMAGE = 20
-		if rngnum2 == 6 or rngnum3 == 7:
+		if rngnum2 == 6 or rngnum3 == 4: # не бейте, я исправил
 			twotapkill = true
 		else:
 			twotapkill = false

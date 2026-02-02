@@ -4,6 +4,7 @@ var SPEED = 1450
 const DAMAGE = 100
 
 var rngnum = 0
+var rngnum2 = 0
 
 func _ready() -> void:
 	if GamemodeManager.GAMEMODE == 3:
@@ -14,9 +15,11 @@ func _ready() -> void:
 		#print("date:" + str(hash(int(DATE/64))))
 		RNG.seed = hash(int(DATE))
 		rngnum = RNG.randi_range(0, 7)
+		rngnum2 = RNG.randi_range(0, 9)
+		
 		if rngnum == 3:
 			SPEED = 600
-		elif rngnum == 6:
+		elif rngnum == 6 or rngnum2 == 8:
 			SPEED = 700
 func _physics_process(delta):
 	linear_velocity = Vector2(0, -SPEED).rotated(global_rotation)

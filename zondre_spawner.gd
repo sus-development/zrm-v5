@@ -2,7 +2,8 @@ extends Timer
 
 const ZONDRE = preload("res://zondre.tscn")
 var rngnum = 0
-
+var rngnum2 = 0
+ 
 func _on_timeout() -> void:
 	if GamemodeManager.GAMEMODE == 3:
 		var DATE = Time.get_date_string_from_system()
@@ -12,7 +13,8 @@ func _on_timeout() -> void:
 		#print("date:" + str(hash(int(DATE/64))))
 		RNG.seed = hash(int(DATE))
 		rngnum = RNG.randi_range(0, 19)
-		if rngnum == 16:
+		rngnum2 = RNG.randi_range(0,6)
+		if rngnum == 16 or rngnum2 == 4:
 			wait_time = randf_range(1.4, 3.8)
 	elif GamemodeManager.GAMEMODE != 3 or rngnum != 16:
 		wait_time = randf_range(2.5, 5)			
