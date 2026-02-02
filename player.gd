@@ -59,6 +59,7 @@ var INVENTORY_FILLED = 0
 @export var MAX_HEALTH = 100
 var SCORE = 0
 var RUNLOCK = 0
+var FORCE_RUNLOCK = false
 var shake = false
 @export var ded: bool = false
 
@@ -123,9 +124,10 @@ func _ready() -> void:
 		DATE = int(str(DATE).replace("-", ""))
 		#print("date:" + str(hash(int(DATE/64))))
 		RNG.seed = hash(int(DATE))
-		var rngnum = RNG.randi_range(0, 12)
+		var rngnum = RNG.randi_range(0, 10)
 		var rngnum2 = RNG.randi_range(0, 14)
 		var rngnum3 = RNG.randi_range(0, 23)
+		var rngnum4 = RNG.randi_range(0, 18)
 		#print(rngnum)
 		#print(rngnum2)
 		#print(rngnum3)
@@ -133,7 +135,7 @@ func _ready() -> void:
 		if rngnum == 5:
 			REGULAR_SPEED = 200
 			RUN_SPEED = 335
-		elif rngnum == 11:
+		elif rngnum == 9:
 			REGULAR_SPEED = 250
 			RUN_SPEED = 375	
 		if rngnum2 == 4:
@@ -149,7 +151,7 @@ func _ready() -> void:
 			"grenade": false,
 		},
 			]
-		elif rngnum2 == 9:
+		elif rngnum2 == 9 or rngnum4 == 12:
 			WEAPONS = [
 	{
 		"name": tr("$hegrenade"),
@@ -165,7 +167,7 @@ func _ready() -> void:
 		elif rngnum2 == 6:
 			for weapon in WEAPONS.size():
 				WEAPONS[weapon]["delay"] *= 3
-		elif rngnum2 == 12:
+		elif rngnum2 == 12 or rngnum4 == 8:
 			unreliableweapon = true
 		if rngnum3 == 15:
 			MAX_HEALTH = 60
@@ -175,6 +177,12 @@ func _ready() -> void:
 			MAX_HEALTH = 80
 			health_bar.max_value = 80
 			HEALTH = 80
+		elif rngnum3 == 7: # совсем плохо
+			MAX_HEALTH = 40
+			health_bar.max_value = 40
+			HEALTH = 40	
+		if rngnum4 == 11:
+			FORCE_RUNLOCK = true
 	
 	match GamemodeManager.GAMEMODE:
 		2:
@@ -278,9 +286,9 @@ func _physics_process(delta: float):
 					VINOSLIVOST += 6.5 * delta
 					fov_down()
 		#					$Camera2D.zoom = Vector2(1, 1)
-			if (VINOSLIVOST <= 35) and !Input.is_action_pressed("run"):
+			if (VINOSLIVOST <= 35) and !Input.is_action_pressed("run") or FORCE_RUNLOCK:
 				RUNLOCK = 1
-			if (VINOSLIVOST >= 35):
+			if (VINOSLIVOST >= 35) and !FORCE_RUNLOCK:
 				RUNLOCK = 0
 		
 	match GamemodeManager.GAMEMODE:
@@ -353,7 +361,6 @@ func ratata():
 		shoot()
 	
 func _input(event):
-	
 	if event.is_action_pressed("shoot") and !WEAPONS[SELECTED_WEAPON]["grenade"]:
 		if (OS.get_name() != "Android"):
 			shoot()
@@ -450,7 +457,7 @@ func changeweapon(number: int = 0):
 	else:
 		SELECTED_WEAPON = number
 		weaponhint_show()
-		print(SELECTED_WEAPON)
+		#print(SELECTED_WEAPON)
 
 		
 	

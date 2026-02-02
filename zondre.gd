@@ -62,7 +62,7 @@ func _ready() -> void:
 			SPEED = 380
 		if rngnum2 == 2:
 			DAMAGE = 20
-		if rngnum2 == 6:
+		if rngnum2 == 6 or rngnum3 == 7:
 			twotapkill = true
 		else:
 			twotapkill = false
