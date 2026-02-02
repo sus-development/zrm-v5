@@ -19,7 +19,11 @@ const DEFAULT_SPEED = 217
 var SPEED = 217
 var HP = 100
 var DAMAGE = 10
+var rngnum
+var rngnum2
+var rngnum3
 
+var twotapkill = false
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _ready() -> void:
 	match GamemodeManager.GAMEMODE:
@@ -48,12 +52,20 @@ func _ready() -> void:
 		DATE = int(str(DATE).replace("-", ""))
 		#print("date:" + str(hash(int(DATE/64))))
 		RNG.seed = hash(int(DATE))
-		var rngnum = RNG.randi_range(0, 4)
-		var rngnum2 = RNG.randi_range(0, 6)
+		rngnum = RNG.randi_range(0, 4)
+		rngnum2 = RNG.randi_range(0, 6)
+		rngnum3 = RNG.randi_range(0, 8)
+		#print(rngnum)
+		#print(rngnum2)
+		#print(rngnum3)
 		if rngnum == 3:
 			SPEED = 380
 		if rngnum2 == 2:
 			DAMAGE = 20
+		if rngnum2 == 6:
+			twotapkill = true
+		else:
+			twotapkill = false
 			
 func _physics_process(delta: float) -> void:
 	if HP <= 0:
@@ -86,6 +98,14 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body.name == "player":
 		body.HEALTH -= DAMAGE
 	if body.is_in_group("danger_zombie"):
-		HP -= body.DAMAGE
-		player.SCORE += 1
-		body.queue_free()
+		if GamemodeManager.GAMEMODE != 3 or !twotapkill:
+			HP -= body.DAMAGE
+			player.SCORE += 1
+			body.queue_free()
+		if GamemodeManager.GAMEMODE == 3 and twotapkill:
+			HP -= body.DAMAGE/2
+			body.queue_free()
+			if HP <= 0:
+				player.SCORE += 1
+
+			

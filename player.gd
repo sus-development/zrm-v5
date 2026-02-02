@@ -39,6 +39,7 @@ const PICKUP_MEDKIT_01 = preload("res://Sound/pickup_medkit_01.wav")
 const PICKUP_MEDKIT_02 = preload("res://Sound/pickup_medkit_02.wav")
 var GRENADE_PREPARE = preload("uid://brrx5ku6x7b1n")
 
+var unreliableweapon = false
 
 var time = Time.get_datetime_dict_from_system()
 var month = time["month"]
@@ -160,7 +161,12 @@ func _ready() -> void:
 		"icon": "res://Resources/ui_stuff_lol/weapon_hegrenade.png",
 		"grenade": true,
 	},
-			]			
+			]	
+		elif rngnum2 == 6:
+			for weapon in WEAPONS.size():
+				WEAPONS[weapon]["delay"] *= 3
+		elif rngnum2 == 12:
+			unreliableweapon = true
 		if rngnum3 == 15:
 			MAX_HEALTH = 60
 			health_bar.max_value = 60
@@ -453,7 +459,10 @@ func shoot():
 		if DELAY >= WEAPONS[SELECTED_WEAPON]["delay"]:
 			var bullet = P_BULLET.instantiate()
 			bullet.global_position = $Marker2D.global_position
-			bullet.global_rotation = global_rotation
+			if GamemodeManager.GAMEMODE == 3 and unreliableweapon:
+				bullet.global_rotation = global_rotation+(sin(WEAPONS[SELECTED_WEAPON]["left_bullets"]))/2
+			else:
+				bullet.global_rotation = global_rotation
 			# bullet.add_constant_force(get_global_mouse_position() - bullet.global_position)
 			get_parent().add_child(bullet)
 			WEAPONS[SELECTED_WEAPON]["left_bullets"] -= 1
