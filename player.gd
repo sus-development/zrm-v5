@@ -138,7 +138,7 @@ func _ready() -> void:
 		elif rngnum == 9:
 			REGULAR_SPEED = 250
 			RUN_SPEED = 375	
-		if rngnum2 == 4 or rngnum4 == 3:
+		if (rngnum2 == 5 or 4) or rngnum4 == 3:
 			WEAPONS = [
 		{
 			"name": tr("$starterpistol"),
@@ -177,11 +177,11 @@ func _ready() -> void:
 			MAX_HEALTH = 80
 			health_bar.max_value = 80
 			HEALTH = 80
-		elif rngnum3 == 7: # совсем плохо
+		elif rngnum3 == 7 or 8: # совсем плохо
 			MAX_HEALTH = 40
 			health_bar.max_value = 40
 			HEALTH = 40	
-		if rngnum4 == 11:
+		if rngnum4 == 11 or 16:
 			FORCE_RUNLOCK = true
 	
 	match GamemodeManager.GAMEMODE:

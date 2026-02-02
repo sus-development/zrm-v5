@@ -62,7 +62,7 @@ func _ready() -> void:
 			SPEED = 380
 		if rngnum2 == 2 or rngnum3 == 1:
 			DAMAGE = 20
-		if rngnum2 == 6 or rngnum3 == 4: # не бейте, я исправил
+		if (rngnum2 == 6 or 3) or rngnum3 == 4: # не бейте, я исправил
 			twotapkill = true
 		else:
 			twotapkill = false
