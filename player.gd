@@ -138,7 +138,7 @@ func _ready() -> void:
 		elif rngnum == 9:
 			REGULAR_SPEED = 250
 			RUN_SPEED = 375	
-		if rngnum2 == 5 or rngnum4 == 3:
+		if rngnum2 == 7 or rngnum4 == 3:
 			WEAPONS = [
 		{
 			"name": tr("$starterpistol"),
