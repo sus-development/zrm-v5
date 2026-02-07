@@ -22,8 +22,8 @@ sample_partition_type = 1
 [sub_resource type="Environment" id="Environment_iotsf"]
 background_mode = 3
 glow_enabled = true
-glow_levels/2 = 1.65
-glow_levels/6 = 0.65
+glow_levels/2 = 0.36
+glow_levels/3 = 0.52
 glow_normalized = true
 glow_bloom = 0.56
 glow_map_strength = 0.75
@@ -38,6 +38,7 @@ process_mode = 3
 script = ExtResource("1_6olua")
 
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="." unique_id=98038227]
+visible = false
 navigation_polygon = SubResource("NavigationPolygon_iotsf")
 
 [node name="grass" type="Sprite2D" parent="." unique_id=638621766]

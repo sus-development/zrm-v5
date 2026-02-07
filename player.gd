@@ -82,7 +82,8 @@ var inthehall = false
 		"left_bullets": 12,
 		"zapas_bullets": 48,
 		"icon": "res://Resources/ui_stuff_lol/weapon_starterpistol.png",
-		"grenade": false,
+		"type": "gun",
+		"sway": 0.07,
 	},
 	{
 		"name": tr("$startermp"),
@@ -92,7 +93,8 @@ var inthehall = false
 		"left_bullets": 30,
 		"zapas_bullets": 30,
 		"icon": "res://Resources/ui_stuff_lol/weapon_startermp.png",
-		"grenade": false,
+		"type": "gun",
+		"sway": 0.08,
 	},
 	{
 		"name": tr("$hegrenade"),
@@ -102,7 +104,8 @@ var inthehall = false
 		"left_bullets": 1,
 		"zapas_bullets": 4,
 		"icon": "res://Resources/ui_stuff_lol/weapon_hegrenade.png",
-		"grenade": true,
+		"type": "grenade",
+		"sway": 0,
 	},
 ]
 
@@ -148,7 +151,8 @@ func _ready() -> void:
 			"left_bullets": 1,
 			"zapas_bullets": 40,
 			"icon": "res://Resources/ui_stuff_lol/weapon_starterpistol.png",
-			"grenade": false,
+			"type": "gun",
+			"sway": 0.15,
 		},
 			]
 		elif rngnum2 == 9 or rngnum4 == 12:
@@ -161,7 +165,7 @@ func _ready() -> void:
 		"left_bullets": 1,
 		"zapas_bullets": 16,
 		"icon": "res://Resources/ui_stuff_lol/weapon_hegrenade.png",
-		"grenade": true,
+		"type": "grenade",
 	},
 			]	
 		elif rngnum2 == 6 or 4:
@@ -355,24 +359,23 @@ func _process(delta: float):
 		ratata()	
 
 func ratata():
-	if !WEAPONS[SELECTED_WEAPON]["automatic"] or WEAPONS[SELECTED_WEAPON]["grenade"]:
+	if !WEAPONS[SELECTED_WEAPON]["automatic"] or WEAPONS[SELECTED_WEAPON]["type"] == "grenade":
 		return
 	if WEAPONS[SELECTED_WEAPON]["left_bullets"] > 0 and DELAY >= WEAPONS[SELECTED_WEAPON]["delay"]:
 		shoot()
 	
 func _input(event):
-	if event.is_action_pressed("shoot") and !WEAPONS[SELECTED_WEAPON]["grenade"]:
+	if event.is_action_pressed("shoot") and WEAPONS[SELECTED_WEAPON]["type"] == "gun":
 		if (OS.get_name() != "Android"):
 			shoot()
-	if Input.is_action_pressed("shoot") and WEAPONS[SELECTED_WEAPON]["grenade"]:
+	if Input.is_action_pressed("shoot") and WEAPONS[SELECTED_WEAPON]["type"] == "grenade":
 		grenade_target.global_position = get_global_mouse_position()
 		inthehall = true # (-all +ole)
-	if Input.is_action_just_pressed("shoot") and WEAPONS[SELECTED_WEAPON]["grenade"] and WEAPONS[SELECTED_WEAPON]["left_bullets"] > 0:
+	if Input.is_action_just_pressed("shoot") and WEAPONS[SELECTED_WEAPON]["type"] == "grenade" and WEAPONS[SELECTED_WEAPON]["left_bullets"] > 0:
 		$Pickup01.stream = GRENADE_PREPARE
 		$Pickup01.pitch_scale = randf_range(0.83, 1.06)
-		max_range2 = max_range + randf_range(0, 50)
 		$Pickup01.play()
-	if Input.is_action_just_released("shoot") and inthehall and WEAPONS[SELECTED_WEAPON]["grenade"]:
+	if Input.is_action_just_released("shoot") and inthehall and WEAPONS[SELECTED_WEAPON]["type"] == "grenade":
 		throw()
 		pass
 
@@ -467,9 +470,12 @@ func shoot():
 			var bullet = P_BULLET.instantiate()
 			bullet.global_position = $Marker2D.global_position
 			if GamemodeManager.GAMEMODE == 3 and unreliableweapon:
-				bullet.global_rotation = global_rotation+(sin(WEAPONS[SELECTED_WEAPON]["left_bullets"]))/2
+				bullet.global_rotation = global_rotation+(sin(randf_range(-64, 64)) )/2.3
 			else:
-				bullet.global_rotation = global_rotation
+				if WEAPONS[SELECTED_WEAPON]["left_bullets"] == WEAPONS[SELECTED_WEAPON]["bullets"]:
+					bullet.global_rotation = global_rotation+(sin(randf_range(-64, 64)))*WEAPONS[SELECTED_WEAPON]["sway"]/1.5
+				else:
+					bullet.global_rotation = global_rotation+(sin(randf_range(-64, 64)))*WEAPONS[SELECTED_WEAPON]["sway"]
 			# bullet.add_constant_force(get_global_mouse_position() - bullet.global_position)
 			get_parent().add_child(bullet)
 			WEAPONS[SELECTED_WEAPON]["left_bullets"] -= 1
@@ -487,7 +493,8 @@ func throw():
 	if WEAPONS[SELECTED_WEAPON]["left_bullets"] != 0:
 		if DELAY >= WEAPONS[SELECTED_WEAPON]["delay"]:
 			var grenade = P_GRENADE.instantiate()
-			var targetdir = $GrenadeTarget.global_position - global_position 
+			var targetdir = $GrenadeTarget.global_position - global_position
+			max_range2 = max_range + randf_range(0, 50)
 			if targetdir.length() > max_range2:
 				$GrenadeTarget.global_position = global_position + targetdir.limit_length(max_range2)
 			grenade.global_position = $Marker2D.global_position
@@ -515,23 +522,19 @@ func bullets_reload():
 				$ReloadSound.pitch_scale = randf_range(0.94, 1.05)
 				$ReloadSound.play()
 		_:
-			if (WEAPONS[SELECTED_WEAPON]["grenade"]):
-				if (WEAPONS[SELECTED_WEAPON]["left_bullets"] == 0) and (WEAPONS[SELECTED_WEAPON]["zapas_bullets"] >= WEAPONS[SELECTED_WEAPON]["bullets"]):
-					WEAPONS[SELECTED_WEAPON]["left_bullets"] = WEAPONS[SELECTED_WEAPON]["bullets"]
-					DELAY = 0
-					WEAPONS[SELECTED_WEAPON]["zapas_bullets"] -= WEAPONS[SELECTED_WEAPON]["bullets"]
-					WEAPONS[SELECTED_WEAPON]["zapas_bullets"] = max(0, WEAPONS[SELECTED_WEAPON]["zapas_bullets"])
-					$ReloadSound.pitch_scale = randf_range(1.2, 1.35)
-					$ReloadSound.stream = PICKUP_01
-					$ReloadSound.play()
 			if (WEAPONS[SELECTED_WEAPON]["left_bullets"] == 0) and (WEAPONS[SELECTED_WEAPON]["zapas_bullets"] >= WEAPONS[SELECTED_WEAPON]["bullets"]):
 				WEAPONS[SELECTED_WEAPON]["left_bullets"] = WEAPONS[SELECTED_WEAPON]["bullets"]
 				DELAY = 0
 				WEAPONS[SELECTED_WEAPON]["zapas_bullets"] -= WEAPONS[SELECTED_WEAPON]["bullets"]
 				WEAPONS[SELECTED_WEAPON]["zapas_bullets"] = max(0, WEAPONS[SELECTED_WEAPON]["zapas_bullets"])
-				$ReloadSound.pitch_scale = randf_range(0.94, 1.05)
-				$ReloadSound.stream = load("res://Sound/pistol-reload.wav")
-				$ReloadSound.play()
+				if WEAPONS[SELECTED_WEAPON]["type"] == "grenade":
+					$ReloadSound.pitch_scale = randf_range(1.2, 1.35)
+					$ReloadSound.stream = PICKUP_01
+					$ReloadSound.play()
+				else:
+					$ReloadSound.pitch_scale = randf_range(0.94, 1.05)
+					$ReloadSound.stream = load("res://Sound/pistol-reload.wav")
+					$ReloadSound.play()
 
 func _on_walkdelay_timeout() -> void:
 	if Input.is_action_pressed("run") and (Input.is_action_pressed("up") or Input.is_action_pressed("down") or Input.is_action_pressed("left") or Input.is_action_pressed("right")) and RUNLOCK != 1:

@@ -64,7 +64,7 @@ offset_right = 347.0
 offset_bottom = 38.0
 theme_override_constants/h_separation = 0
 theme_override_constants/align_to_largest_stylebox = 0
-text = "📂"
+text = " 📂"
 
 [node name="VBoxContainer" type="ScrollContainer" parent="Control/Panel" unique_id=913943766]
 layout_mode = 0
