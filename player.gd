@@ -94,7 +94,7 @@ var inthehall = false
 		"zapas_bullets": 30,
 		"icon": "res://Resources/ui_stuff_lol/weapon_startermp.png",
 		"type": "gun",
-		"sway": 0.08,
+		"sway": 0.06,
 	},
 	{
 		"name": tr("$hegrenade"),
