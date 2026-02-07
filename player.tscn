@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://bgd4is08hm4yv"]
+[gd_scene format=3 uid="uid://bgd4is08hm4yv"]
 
 [ext_resource type="Script" uid="uid://dkbllljttt738" path="res://player.gd" id="1_16hic"]
 [ext_resource type="Texture2D" uid="uid://c0gntm575ocrj" path="res://Resources/person.png" id="2_fef5v"]
@@ -38,6 +38,28 @@ tracks/1/keys = {
 "update": 0,
 "values": [0.0]
 }
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:position:x")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:position:y")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
 
 [sub_resource type="Animation" id="Animation_dw050"]
 resource_name = "shake"
@@ -67,44 +89,82 @@ tracks/1/keys = {
 "values": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
 }
 
+[sub_resource type="Animation" id="Animation_n7ghd"]
+resource_name = "shotgun_recoil"
+length = 0.272
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, -5, -0.009398529, 0.8333334, 0, 0, -5, -0.136, 0, 0.136, 0, 2, -0.136, 0, 0.136, 0, -2.9999998, -0.136, 0, 0.136, 0, -2.991104, -0.136, 0, 0.136, 0, -3, -0.009807162, 1.8333334, 0, 0, 2, -0.0206359, -0.66666675, 0, 0, -8, -0.136, 0, 0.136, 0, 0, -0.020635903, 0.33333334, 0, 0, 0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0.019428907, 0.033333335, 0.052311942, 0.06538993, 0.07168674, 0.087186575, 0.1, 0.13333334, 0.14676407, 0.16666669, 0.23333335)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, -3, -0.009398529, 0.50000006, 0, 0, 2.9999995, -0.136, 0, 0.136, 0, -5, -0.136, 0, 0.136, 0, 6.0000005, -0.136, 0, 0.136, 0, 5.95901, -0.136, 0, 0.136, 0, -2, -0.009807162, -0.33333334, 0, 0, 3, -0.0206359, 0.33333337, 0, 0, -5, -0.136, 0, 0.136, 0, 1, -0.020635903, 0.33333334, 0, 0, 0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0.019428907, 0.033333335, 0.052311942, 0.06538993, 0.07168674, 0.087186575, 0.1, 0.13333334, 0.14676407, 0.16666669, 0.23333335)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0, -0.009398529, 0, 0, 0, 0, -0.136, 0, 0.136, 0, 0, -0.136, 0, 0.136, 0, 0, -0.136, 0, 0.136, 0, 0, -0.136, 0, 0.136, 0, 0, -0.009807162, 0, 0, 0, 0, -0.0206359, 0, 0, 0, 0, -0.136, 0, 0.136, 0, 0, -0.020635903, 0, 0, 0, 0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0.019428907, 0.033333335, 0.052311942, 0.06538993, 0.07168674, 0.087186575, 0.1, 0.13333334, 0.14676407, 0.16666669, 0.23333335)
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_n7ghd"]
 _data = {
 &"RESET": SubResource("Animation_b26j0"),
-&"shake": SubResource("Animation_dw050")
+&"shake": SubResource("Animation_dw050"),
+&"shotgun_recoil": SubResource("Animation_n7ghd")
 }
 
-[node name="player" type="CharacterBody2D" groups=["player"]]
+[node name="player" type="CharacterBody2D" unique_id=532043823 groups=["player"]]
 position = Vector2(1, 0)
 script = ExtResource("1_16hic")
 
-[node name="Person" type="Sprite2D" parent="."]
+[node name="Person" type="Sprite2D" parent="." unique_id=1630264047]
 texture = ExtResource("2_fef5v")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1348012736]
 position = Vector2(0, 1)
 shape = SubResource("CircleShape2D_7ksh0")
 
-[node name="Marker2D" type="Marker2D" parent="."]
+[node name="Marker2D" type="Marker2D" parent="." unique_id=446653702]
 position = Vector2(-3, -57)
 
-[node name="ShootSound" type="AudioStreamPlayer" parent="."]
+[node name="ShootSound" type="AudioStreamPlayer" parent="." unique_id=1583636328]
 stream = ExtResource("3_ft5c5")
 max_polyphony = 128
 
-[node name="ReloadSound" type="AudioStreamPlayer" parent="."]
+[node name="ReloadSound" type="AudioStreamPlayer" parent="." unique_id=487309433]
 stream = ExtResource("4_51cx5")
 max_polyphony = 128
 
-[node name="EmptySound" type="AudioStreamPlayer" parent="."]
+[node name="EmptySound" type="AudioStreamPlayer" parent="." unique_id=346690221]
 stream = ExtResource("5_by3vp")
 max_polyphony = 128
 
-[node name="GrassStep01" type="AudioStreamPlayer" parent="."]
+[node name="GrassStep01" type="AudioStreamPlayer" parent="." unique_id=386335971]
 stream = ExtResource("10_op7ga")
 volume_db = -6.0
 max_polyphony = 128
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1789102826]
 scale = Vector2(1, 1.6)
 limit_left = 0
 limit_top = 0
@@ -114,32 +174,30 @@ limit_smoothed = true
 position_smoothing_enabled = true
 rotation_smoothing_enabled = true
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Camera2D"]
-libraries = {
-&"": SubResource("AnimationLibrary_n7ghd")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Camera2D" unique_id=1655898463]
+libraries/ = SubResource("AnimationLibrary_n7ghd")
 
-[node name="WalkDelay" type="Timer" parent="."]
+[node name="WalkDelay" type="Timer" parent="." unique_id=94864849]
 wait_time = 0.2
 autostart = true
 
-[node name="Pickup01" type="AudioStreamPlayer" parent="."]
+[node name="Pickup01" type="AudioStreamPlayer" parent="." unique_id=189096728]
 stream = ExtResource("6_urp6f")
 pitch_scale = 1.49
 max_polyphony = 128
 
-[node name="PickupMedkit01" type="AudioStreamPlayer" parent="."]
+[node name="PickupMedkit01" type="AudioStreamPlayer" parent="." unique_id=715214318]
 stream = ExtResource("8_606se")
 pitch_scale = 1.24
 max_polyphony = 128
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="Area2D" type="Area2D" parent="." unique_id=805093526]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=848152030]
 position = Vector2(0, 1)
 shape = SubResource("CircleShape2D_7ksh0")
 
-[node name="GrenadeTarget" type="Marker2D" parent="."]
+[node name="GrenadeTarget" type="Marker2D" parent="." unique_id=621191420]
 position = Vector2(-1, -76)
 
 [connection signal="timeout" from="WalkDelay" to="." method="_on_walkdelay_timeout"]

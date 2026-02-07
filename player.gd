@@ -40,7 +40,7 @@ const PICKUP_MEDKIT_02 = preload("res://Sound/pickup_medkit_02.wav")
 var GRENADE_PREPARE = preload("uid://brrx5ku6x7b1n")
 
 var unreliableweapon = false
-
+var RELOADING = false
 var time = Time.get_datetime_dict_from_system()
 var month = time["month"]
 var HINT_TWEEN : Tween
@@ -59,6 +59,9 @@ var INVENTORY_FILLED = 0
 @export var MAX_HEALTH = 100
 var SCORE = 0
 var RUNLOCK = 0
+var INCREMENT_DELAY = 0
+var ogroundamount = 0
+var maybeselectedweapon = 0
 var FORCE_RUNLOCK = false
 var shake = false
 @export var ded: bool = false
@@ -82,8 +85,13 @@ var inthehall = false
 		"left_bullets": 12,
 		"zapas_bullets": 48,
 		"icon": "res://Resources/ui_stuff_lol/weapon_starterpistol.png",
+		"incremental_reload": false,
+		"increment_sound": "res://Sound/shotgun_increment",
+		"increment_delay": 0,
 		"type": "gun",
 		"sway": 0.07,
+		"soundondelay": false,
+		"delaysound": "res://Sound/shotgun_cycle.wav"
 	},
 	{
 		"name": tr("$startermp"),
@@ -93,8 +101,13 @@ var inthehall = false
 		"left_bullets": 30,
 		"zapas_bullets": 30,
 		"icon": "res://Resources/ui_stuff_lol/weapon_startermp.png",
+		"incremental_reload": false,
+		"increment_sound": "res://Sound/shotgun_increment",
+		"increment_delay": 0,
 		"type": "gun",
 		"sway": 0.06,
+		"soundondelay": false,
+		"delaysound": "res://Sound/shotgun_cycle.wav"
 	},
 	{
 		"name": tr("$hegrenade"),
@@ -104,8 +117,29 @@ var inthehall = false
 		"left_bullets": 1,
 		"zapas_bullets": 4,
 		"icon": "res://Resources/ui_stuff_lol/weapon_hegrenade.png",
+		"incremental_reload": false,
+		"increment_sound": "res://Sound/shotgun_increment",
+		"increment_delay": 0,
 		"type": "grenade",
 		"sway": 0,
+		"soundondelay": false,
+		"delaysound": "res://Sound/shotgun_cycle.wav"
+	},
+	{
+		"name": tr("$basicshotgun"),
+		"delay": 2.5,
+		"automatic": false,
+		"bullets": 6,
+		"left_bullets": 6,
+		"zapas_bullets": 24,
+		"icon": "res://Resources/ui_stuff_lol/weapon_basicshotgun.png",
+		"incremental_reload": true,
+		"increment_sound": "res://Sound/shotgun_increment",
+		"increment_delay": 0.3,
+		"type": "shotgun",
+		"sway": 0.15,
+		"soundondelay": true,
+		"delaysound": "res://Sound/shotgun_cycle.wav"
 	},
 ]
 
@@ -151,8 +185,13 @@ func _ready() -> void:
 			"left_bullets": 1,
 			"zapas_bullets": 40,
 			"icon": "res://Resources/ui_stuff_lol/weapon_starterpistol.png",
+			"incremental_reload": false,
+			"increment_sound": "res://Sound/shotgun_increment",
+			"increment_delay": 0,
 			"type": "gun",
 			"sway": 0.15,
+			"soundondelay": false,
+			"delaysound": "res://Sound/shotgun_cycle.wav"
 		},
 			]
 		elif rngnum2 == 9 or rngnum4 == 12:
@@ -165,7 +204,13 @@ func _ready() -> void:
 		"left_bullets": 1,
 		"zapas_bullets": 16,
 		"icon": "res://Resources/ui_stuff_lol/weapon_hegrenade.png",
+		"incremental_reload": false,
+		"increment_sound": "res://Sound/shotgun_increment",
+		"increment_delay": 0,
 		"type": "grenade",
+		"sway": 0,
+		"soundondelay": false,
+		"delaysound": "res://Sound/shotgun_cycle.wav"
 	},
 			]	
 		elif rngnum2 == 6 or 4:
@@ -260,7 +305,18 @@ func _physics_process(delta: float):
 	else:
 		pass
 	
-	
+	if RELOADING and WEAPONS[SELECTED_WEAPON]["incremental_reload"]:
+		if INCREMENT_DELAY >= WEAPONS[maybeselectedweapon]["increment_delay"]:
+			INCREMENT_DELAY = 0
+			$ReloadSound.stream = load(str(WEAPONS[maybeselectedweapon]["increment_sound"] + "_" + str(randi_range(1,5)).pad_zeros(2)) + ".wav")
+			$ReloadSound.pitch_scale = randf_range(0.92, 1.04)
+			$ReloadSound.play()
+			WEAPONS[maybeselectedweapon]["left_bullets"] += 1
+			WEAPONS[maybeselectedweapon]["zapas_bullets"] -= 1
+			if WEAPONS[maybeselectedweapon]["zapas_bullets"] <= 0 or WEAPONS[SELECTED_WEAPON]["left_bullets"] == WEAPONS[SELECTED_WEAPON]["bullets"]:
+				RELOADING = false
+			if WEAPONS[SELECTED_WEAPON]["left_bullets"]	== WEAPONS[SELECTED_WEAPON]["bullets"] and !RELOADING and ogroundamount == 0:
+				DELAY = WEAPONS[SELECTED_WEAPON]["delay"]	
 	match GamemodeManager.GAMEMODE:
 		1:
 			pass
@@ -318,7 +374,13 @@ func _physics_process(delta: float):
 		rotate(PI / 2)
 	if DELAY <= WEAPONS[SELECTED_WEAPON]["delay"]:
 		DELAY += 5.3 * delta
-		print("DELAY:" + str(DELAY))
+		if DELAY >= WEAPONS[SELECTED_WEAPON]["delay"]/3.4 and WEAPONS[SELECTED_WEAPON]["left_bullets"] > 0 and WEAPONS[SELECTED_WEAPON]["soundondelay"]:
+			$ReloadSound.stream = load(WEAPONS[SELECTED_WEAPON]["delaysound"])
+			$ReloadSound.pitch_scale = randf_range(0.96, 1.04)
+			$ReloadSound.play()
+		#print("DELAY:" + str(DELAY))
+	if INCREMENT_DELAY <= WEAPONS[SELECTED_WEAPON]["increment_delay"]:
+		INCREMENT_DELAY += 1 * delta
 
 func fov_up():
 	var tween = $Camera2D.create_tween()
@@ -352,22 +414,26 @@ func _process(delta: float):
 		vignette_red.lowhealth = false	
 		
 	if shake:
-		$Camera2D/AnimationPlayer.play("shake")	
+		$Camera2D/AnimationPlayer.play("shake")
 		shake = false
 		
 	if Input.is_action_pressed("shoot"):
 		ratata()	
 
 func ratata():
-	if !WEAPONS[SELECTED_WEAPON]["automatic"] or WEAPONS[SELECTED_WEAPON]["type"] == "grenade":
+	if !WEAPONS[SELECTED_WEAPON]["automatic"] or WEAPONS[SELECTED_WEAPON]["type"] == "grenade" or RELOADING:
 		return
-	if WEAPONS[SELECTED_WEAPON]["left_bullets"] > 0 and DELAY >= WEAPONS[SELECTED_WEAPON]["delay"]:
+	if WEAPONS[SELECTED_WEAPON]["left_bullets"] > 0 and DELAY >= WEAPONS[SELECTED_WEAPON]["delay"] and !RELOADING:
 		shoot()
 	
 func _input(event):
-	if event.is_action_pressed("shoot") and WEAPONS[SELECTED_WEAPON]["type"] == "gun":
-		if (OS.get_name() != "Android"):
-			shoot()
+	if event.is_action_pressed("shoot") and WEAPONS[SELECTED_WEAPON]["type"] != "grenade":
+		if RELOADING:
+			RELOADING = false
+		else:
+			if (OS.get_name() != "Android"):
+				shoot()
+			
 	if Input.is_action_pressed("shoot") and WEAPONS[SELECTED_WEAPON]["type"] == "grenade":
 		grenade_target.global_position = get_global_mouse_position()
 		inthehall = true # (-all +ole)
@@ -460,6 +526,7 @@ func changeweapon(number: int = 0):
 	else:
 		SELECTED_WEAPON = number
 		weaponhint_show()
+		RELOADING = false
 		#print(SELECTED_WEAPON)
 
 		
@@ -467,23 +534,46 @@ func changeweapon(number: int = 0):
 func shoot():
 	if WEAPONS[SELECTED_WEAPON]["left_bullets"] != 0:
 		if DELAY >= WEAPONS[SELECTED_WEAPON]["delay"]:
-			var bullet = P_BULLET.instantiate()
-			bullet.global_position = $Marker2D.global_position
-			if GamemodeManager.GAMEMODE == 3 and unreliableweapon:
-				bullet.global_rotation = global_rotation+(sin(randf_range(-64, 64)) )/2.3
-			else:
-				if WEAPONS[SELECTED_WEAPON]["left_bullets"] == WEAPONS[SELECTED_WEAPON]["bullets"]:
-					bullet.global_rotation = global_rotation+(sin(randf_range(-64, 64)))*WEAPONS[SELECTED_WEAPON]["sway"]/1.5
-				else:
-					bullet.global_rotation = global_rotation+(sin(randf_range(-64, 64)))*WEAPONS[SELECTED_WEAPON]["sway"]
+			
 			# bullet.add_constant_force(get_global_mouse_position() - bullet.global_position)
-			get_parent().add_child(bullet)
+			if WEAPONS[SELECTED_WEAPON]["type"] == "shotgun":
+				$Camera2D/AnimationPlayer.stop()
+				$Camera2D/AnimationPlayer.play("shotgun_recoil")	
+				for i in 9:
+					var bullet = P_BULLET.instantiate()
+					bullet.shotgunbullet = true
+					bullet.global_position = $Marker2D.global_position
+					if GamemodeManager.GAMEMODE == 3 and unreliableweapon:
+						bullet.global_rotation = global_rotation+(sin(randf_range(-64, 64)) )/2.3
+					else:
+						if WEAPONS[SELECTED_WEAPON]["left_bullets"] == WEAPONS[SELECTED_WEAPON]["bullets"]:
+							bullet.global_rotation = global_rotation+(sin(randf_range(-64, 64)))*WEAPONS[SELECTED_WEAPON]["sway"]/1.5
+						else:
+							bullet.global_rotation = global_rotation+(sin(randf_range(-64, 64)))*WEAPONS[SELECTED_WEAPON]["sway"]					
+					get_parent().add_child(bullet)
+			else:
+				var bullet = P_BULLET.instantiate()
+				bullet.global_position = $Marker2D.global_position
+				bullet.shotgunbullet = false
+				if GamemodeManager.GAMEMODE == 3 and unreliableweapon:
+					bullet.global_rotation = global_rotation+(sin(randf_range(-64, 64)) )/2.3
+				else:
+					if WEAPONS[SELECTED_WEAPON]["left_bullets"] == WEAPONS[SELECTED_WEAPON]["bullets"]:
+						bullet.global_rotation = global_rotation+(sin(randf_range(-64, 64)))*WEAPONS[SELECTED_WEAPON]["sway"]/1.5
+					else:
+						bullet.global_rotation = global_rotation+(sin(randf_range(-64, 64)))*WEAPONS[SELECTED_WEAPON]["sway"]	
+						
+				get_parent().add_child(bullet)
 			WEAPONS[SELECTED_WEAPON]["left_bullets"] -= 1
 			WEAPONS[SELECTED_WEAPON]["left_bullets"] = max(0, WEAPONS[SELECTED_WEAPON]["left_bullets"])
 			$ShootSound.pitch_scale = randf_range(0.93, 1.06)
+			if WEAPONS[SELECTED_WEAPON]["type"] == "shotgun":
+				$ShootSound.stream = load("res://Sound/shotgun.wav")
+			else:
+				$ShootSound.stream = load("res://Sound/pistol.wav")	
 			$ShootSound.play()
 			DELAY = 0
-			print(DELAY)
+			#print(DELAY)
 	else:
 		$EmptySound.play()
 		DELAY = 0
@@ -522,20 +612,26 @@ func bullets_reload():
 				$ReloadSound.pitch_scale = randf_range(0.94, 1.05)
 				$ReloadSound.play()
 		_:
-			if (WEAPONS[SELECTED_WEAPON]["left_bullets"] == 0) and (WEAPONS[SELECTED_WEAPON]["zapas_bullets"] >= WEAPONS[SELECTED_WEAPON]["bullets"]):
-				WEAPONS[SELECTED_WEAPON]["left_bullets"] = WEAPONS[SELECTED_WEAPON]["bullets"]
-				DELAY = 0
-				WEAPONS[SELECTED_WEAPON]["zapas_bullets"] -= WEAPONS[SELECTED_WEAPON]["bullets"]
-				WEAPONS[SELECTED_WEAPON]["zapas_bullets"] = max(0, WEAPONS[SELECTED_WEAPON]["zapas_bullets"])
-				if WEAPONS[SELECTED_WEAPON]["type"] == "grenade":
-					$ReloadSound.pitch_scale = randf_range(1.2, 1.35)
-					$ReloadSound.stream = PICKUP_01
-					$ReloadSound.play()
-				else:
-					$ReloadSound.pitch_scale = randf_range(0.94, 1.05)
-					$ReloadSound.stream = load("res://Sound/pistol-reload.wav")
-					$ReloadSound.play()
-
+			if WEAPONS[SELECTED_WEAPON]["incremental_reload"]:
+				if WEAPONS[SELECTED_WEAPON]["left_bullets"] < WEAPONS[SELECTED_WEAPON]["bullets"] and WEAPONS[SELECTED_WEAPON]["zapas_bullets"] >= 1:
+					maybeselectedweapon = SELECTED_WEAPON
+					ogroundamount = WEAPONS[SELECTED_WEAPON]["left_bullets"]
+					RELOADING = true
+			else:
+				if (WEAPONS[SELECTED_WEAPON]["left_bullets"] == 0) and (WEAPONS[SELECTED_WEAPON]["zapas_bullets"] >= WEAPONS[SELECTED_WEAPON]["bullets"]):
+					WEAPONS[SELECTED_WEAPON]["left_bullets"] = WEAPONS[SELECTED_WEAPON]["bullets"]
+					DELAY = 0
+					WEAPONS[SELECTED_WEAPON]["zapas_bullets"] -= WEAPONS[SELECTED_WEAPON]["bullets"]
+					WEAPONS[SELECTED_WEAPON]["zapas_bullets"] = max(0, WEAPONS[SELECTED_WEAPON]["zapas_bullets"])
+					if WEAPONS[SELECTED_WEAPON]["type"] == "grenade":
+						$ReloadSound.pitch_scale = randf_range(1.2, 1.35)
+						$ReloadSound.stream = PICKUP_01
+						$ReloadSound.play()
+					else:
+						$ReloadSound.pitch_scale = randf_range(0.94, 1.05)
+						$ReloadSound.stream = load("res://Sound/pistol-reload.wav")
+						$ReloadSound.play()
+			
 func _on_walkdelay_timeout() -> void:
 	if Input.is_action_pressed("run") and (Input.is_action_pressed("up") or Input.is_action_pressed("down") or Input.is_action_pressed("left") or Input.is_action_pressed("right")) and RUNLOCK != 1:
 		$WalkDelay.wait_time = randf_range((clamp(0.20 + (INVENTORY_FILLED*0.0025), 0.10, 0.60)),(clamp(0.24 + (INVENTORY_FILLED*0.0035), 0.10, 0.60)))

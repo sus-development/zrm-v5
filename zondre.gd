@@ -69,6 +69,7 @@ func _ready() -> void:
 			
 func _physics_process(delta: float) -> void:
 	if HP <= 0:
+		player.SCORE += 1
 		$".".queue_free()
 	
 	look_at($"../player".position)
@@ -100,12 +101,12 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body.is_in_group("danger_zombie"):
 		if GamemodeManager.GAMEMODE != 3 or !twotapkill:
 			HP -= body.DAMAGE
-			player.SCORE += 1
-			body.queue_free()
+			if body.PIERCETHRU:
+				body.PIERCETHRU = false
+				pass
+			else:
+				body.queue_free()
 		if GamemodeManager.GAMEMODE == 3 and twotapkill:
 			HP -= body.DAMAGE/2
 			body.queue_free()
-			if HP <= 0:
-				player.SCORE += 1
-
 			
