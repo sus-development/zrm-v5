@@ -54,7 +54,7 @@ $classicmodedesc,"Classic mode from the original Zurvival, hardcore! You can try
 $storage,Storage,Склад,Склад,组成,Almacén,Varasto,Skład,Skład,🏬,Noliktava,Sklad
 $restartrequired,Game restart required!,Требуется перезапуск игры!,Патрабуецца перазапуск гульні!,需要重新启动游戏！,Es necesario reiniciar el juego.,Käynnistä peli uudelleen!,Patrabujecca pierazapusk gułʹni!,Wymagany restart gry!,⏏ 🕹 ✔,Nepieciešama spēles restartēšana!,Trebuetsǐa perezapusk igrâ!
 $disablesmoothtransitions,Smooth transitions,Плавные переходы,Плыўныя пераходы,禁用平滑过渡,Transiciones suaves,Hienot siirtymät,Płyŭnyja pierachody,Płynne przejścia, 🍦 🔀,Gludas pārejas,Plavnâe perehodâ
-$wintermodename,Winter mode,Зимний режим,Зімовы рэжым,冬季模式,Modo invierno,Talvinen pelimuoto,Зімовы рэжым,Tryb zimowy,❄️📳,Ziemas režīms,Zimniǐ režim
+$wintermodename,Winter mode,Зимний режим,Зімовы рэжым,冬季模式,Modo invierno,Talvinen pelimuoto,Zimovy režym,Tryb zimowy,❄️📳,Ziemas režīms,Zimniǐ režim
 $wintermodedesc,"You found yourself in a forest in the middle of a zombie-apocalypse. Collect planks, defend yourself from zombu's, and don't let the campfire extinguish.","Вы оказались в лесу посреди зомби-апокалисиса зимой. Собирайте палки, защищайтесь от зомбу, и не дайте костру потухнуть.
 
 
@@ -69,12 +69,15 @@ $coldness,Frost,Мороз,Мароз,冷冻,Congelación,Jäätyminen,Maroz,Zam
 $inventory,Inventory,Инвентарь,Інвентар,存货,Inventario,Tasku,Inventar',Spis,📦🗂️📝,Inventārs,Inventará
 $starterpistol,PP-182,ПК-182,ПК-182,PP-182,PP-182,PP-182,PK-182,PP-182,PP-182,PP-182,PK-182
 $startermp,MP5,MP5,MP5,MP5,MP5,MP5,MP5,MP5,MP5,MP5,MP5
-$selectedweapon,Selected weapon: %s. \nChange weapons using %s,Выбран: %s. \nОружие выбирается c помощью %s,Выбраная зброя: %s. \nЗмяняйце зброю з дапамогай %s,已选武器：%s。\n使用 %s 切换武器。,Arma seleccionada: %s. \nCambia de arma con %s,Valittu ase: %s. \nVaihda aseita %s,Vybranaja zbroja: %s. \nŹmianiajcie zbroju z dapamohaj %s,Wybrana broń: %s. \nZmień broń za pomocą %s,🖊: %s. \n🗡 🖊 ⚙️ %s,"Atlasīts: %s. \nIeroči tiek atlasīti, izmantojot %s",
+$selectedweapon,Selected weapon: %s. \nChange weapons using %s,Выбран: %s. \nОружие выбирается c помощью %s,Выбраная зброя: %s. \nЗмяняйце зброю з дапамогай %s,已选武器：%s。\n使用 %s 切换武器。,Arma seleccionada: %s. \nCambia de arma con %s,Valittu ase: %s. \nVaihda aseita %s,Vybranaja zbroja: %s. \nŹmianiajcie zbroju z dapamohaj %s,Wybrana broń: %s. \nZmień broń za pomocą %s,🖊: %s. \n🗡 🖊 ⚙️ %s,"Atlasīts: %s. \nIeroči tiek atlasīti, izmantojot %s",Vybran: %s. \nOruzhie vybiraetsya c pomoshchyu %s
 $disablegunhints,Disable weapon hints,Отключить подсказки,Выключыць падказкі,"关闭当前武器显示
 ",Desactivar sugerencias,Poista vihjeet käytöstä,Vykliučyć padkazki,Wyłącz podpowiedzi,❎ 🗡 🎱,Atspējot rīka padomus,Otklǐuçitá podskazki
 $hegrenade,AB-13 Grenade,Граната AB-13,Гранада АБ-13,AB-13手榴弹,Granada AB-13,AB-13-kranaatti,Granat AB-13,Granat AB-13,AB-13,Granāta AB-13,Granata AB-13
-$gpadspeed,Gamepad sensitivity,Чувствительность геймпада,Адчувальнасць геймпада,游戏手柄灵敏度,Sensibilidad del gamepad,Peliohjaimen herkkyys,Adčuvalnaść hiejmpada,Czułość gamepada,🕹 🔅,Spēļu vadības ierīces jutība,
-$mousewheel,mouse wheel,колёсика мыши,скролу мышы,鼠标滚轮,la rueda del ratón,hiiren rullalla,skrolu myšy,kółka myszy,🐁 🎡,peles ritenīti,
-$retry,Retry,Заново,Зноў,重来,Reiniciar,Uudelleen,Znoŭ,Ponownie,🔄,Atkārtoti,
-$challenges,Challenges,Челленджы,,,,Haasteet,,,,,
-$challengesdesc,"Try out something new every day, even without internet!",Пробуйте что-то новое каждый день даже без интернета! ,,,,,,,,,
+$gpadspeed,Gamepad sensitivity,Чувствительность геймпада,Адчувальнасць геймпада,游戏手柄灵敏度,Sensibilidad del gamepad,Peliohjaimen herkkyys,Adčuvalnaść hiejmpada,Czułość gamepada,🕹 🔅,Spēļu vadības ierīces jutība,Chuvstvitelnost gejmpada
+$mousewheel,mouse wheel,колёсика мыши,скролу мышы,鼠标滚轮,la rueda del ratón,hiiren rullalla,skrolu myšy,kółka myszy,🐁 🎡,peles ritenīti,kolyosika myshi
+$retry,Retry,Заново,Зноў,重来,Reiniciar,Uudelleen,Znoŭ,Ponownie,🔄,Atkārtoti,Zanovo
+$challenges,Challenges,Челленджы,Выклікі,挑战,Desafíos,Haasteet,Vykliki,Wyzwania,🏆,Izaicinājumi,Chellendzhy
+$challengesdesc,"Try out something new every day, even without internet!",Пробуйте что-то новое каждый день даже без интернета! ,"Пробвайце штосьці новае кожны дзень, нават без інтэрнэту! 
+",即使沒有網路，也要每天嘗試新事物！,"¡Prueba algo nuevo cada día, incluso sin Internet! ","Kokeile jotain uutta joka päivää, vaikka jos ei olisi internettiä!","Probvajcie štości novaje kožny dzień, navat biez internetu! ","Próbuj czegoś nowego każdego dnia, nawet bez internetu! 
+","🔄 🕳 🆕 🔠 📆, 🍵 🕸 ❗","Izmēģiniet kaut ko jaunu katru dienu, pat bez interneta! ",Probujte chto-to novoe kazhdyj den dazhe bez interneta!
+$basicshotgun,Demler 240,Demler 240,Demler 240,Demler 240,Demler 240,Demler 240,Demler 240,Demler 240,Demler 240,Demler 240,Demler 240

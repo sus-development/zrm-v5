@@ -95,7 +95,7 @@ var inthehall = false
 	},
 	{
 		"name": tr("$startermp"),
-		"delay": 0.5,
+		"delay": 0.3,
 		"automatic": true,
 		"bullets": 30,
 		"left_bullets": 30,
@@ -105,7 +105,7 @@ var inthehall = false
 		"increment_sound": "res://Sound/shotgun_increment",
 		"increment_delay": 0,
 		"type": "gun",
-		"sway": 0.06,
+		"sway": 0.09,
 		"soundondelay": false,
 		"delaysound": "res://Sound/shotgun_cycle.wav"
 	},
