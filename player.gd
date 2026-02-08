@@ -64,6 +64,7 @@ var ogroundamount = 0
 var maybeselectedweapon = 0
 var FORCE_RUNLOCK = false
 var shake = false
+var zondrespleasesaveusall = false
 @export var ded: bool = false
 
 @export var REGULAR_SPEED = 300
@@ -76,76 +77,77 @@ var max_range2 = 0
 var inthehall = false
 @export var SELECTED_WEAPON = 0
 
-@export var WEAPONS = [
-	{
-		"name": tr("$starterpistol"),
-		"delay": 1,
-		"automatic": false,
-		"bullets": 12,
-		"left_bullets": 12,
-		"zapas_bullets": 48,
-		"icon": "res://Resources/ui_stuff_lol/weapon_starterpistol.png",
-		"incremental_reload": false,
-		"increment_sound": "res://Sound/shotgun_increment",
-		"increment_delay": 0,
-		"type": "gun",
-		"sway": 0.07,
-		"soundondelay": false,
-		"delaysound": "res://Sound/shotgun_cycle.wav",
-		"sound": "res://Sound/pistol.wav",
-	},
-	{
-		"name": tr("$startermp"),
-		"delay": 0.3,
-		"automatic": true,
-		"bullets": 30,
-		"left_bullets": 30,
-		"zapas_bullets": 30,
-		"icon": "res://Resources/ui_stuff_lol/weapon_startermp.png",
-		"incremental_reload": false,
-		"increment_sound": "res://Sound/shotgun_increment",
-		"increment_delay": 0,
-		"type": "gun",
-		"sway": 0.09,
-		"soundondelay": false,
-		"delaysound": "res://Sound/shotgun_cycle.wav",
-		"sound": "res://Sound/pistol.wav",
-	},
-	{
-		"name": tr("$hegrenade"),
-		"delay": 1,
-		"automatic": false,
-		"bullets": 1,
-		"left_bullets": 1,
-		"zapas_bullets": 4,
-		"icon": "res://Resources/ui_stuff_lol/weapon_hegrenade.png",
-		"incremental_reload": false,
-		"increment_sound": "res://Sound/shotgun_increment",
-		"increment_delay": 0,
-		"type": "grenade",
-		"sway": 0,
-		"soundondelay": false,
-		"delaysound": "res://Sound/shotgun_cycle.wav",
-		"sound": "",
-	},
-	{
-		"name": tr("$basicshotgun"),
-		"delay": 2.5,
-		"automatic": false,
-		"bullets": 6,
-		"left_bullets": 6,
-		"zapas_bullets": 24,
-		"icon": "res://Resources/ui_stuff_lol/weapon_basicshotgun.png",
-		"incremental_reload": true,
-		"increment_sound": "res://Sound/shotgun_increment",
-		"increment_delay": 0.3,
-		"type": "shotgun",
-		"sway": 0.15,
-		"soundondelay": true,
-		"delaysound": "res://Sound/shotgun_cycle.wav",
-		"sound": "res://Sound/shotgun.wav",
-	},
-]
+#@export var WEAPONS = [
+	#{
+		#"name": tr("$starterpistol"),
+		#"delay": 1,
+		#"automatic": false,
+		#"bullets": 12,
+		#"left_bullets": 12,
+		#"zapas_bullets": 48,
+		#"icon": "res://Resources/ui_stuff_lol/weapon_starterpistol.png",
+		#"incremental_reload": false,
+		#"increment_sound": "res://Sound/shotgun_increment",
+		#"increment_delay": 0,
+		#"type": "gun",
+		#"sway": 0.07,
+		#"soundondelay": false,
+		#"delaysound": "res://Sound/shotgun_cycle.wav",
+		#"sound": "res://Sound/pistol.wav",
+	#},
+	#{
+		#"name": tr("$startermp"),
+		#"delay": 0.3,
+		#"automatic": true,
+		#"bullets": 30,
+		#"left_bullets": 30,
+		#"zapas_bullets": 30,
+		#"icon": "res://Resources/ui_stuff_lol/weapon_startermp.png",
+		#"incremental_reload": false,
+		#"increment_sound": "res://Sound/shotgun_increment",
+		#"increment_delay": 0,
+		#"type": "gun",
+		#"sway": 0.09,
+		#"soundondelay": false,
+		#"delaysound": "res://Sound/shotgun_cycle.wav",
+		#"sound": "res://Sound/pistol.wav",
+	#},
+	#{
+		#"name": tr("$hegrenade"),
+		#"delay": 1,
+		#"automatic": false,
+		#"bullets": 1,
+		#"left_bullets": 1,
+		#"zapas_bullets": 4,
+		#"icon": "res://Resources/ui_stuff_lol/weapon_hegrenade.png",
+		#"incremental_reload": false,
+		#"increment_sound": "res://Sound/shotgun_increment",
+		#"increment_delay": 0,
+		#"type": "grenade",
+		#"sway": 0,
+		#"soundondelay": false,
+		#"delaysound": "res://Sound/shotgun_cycle.wav",
+		#"sound": "",
+	#},
+	#{
+		#"name": tr("$basicshotgun"),
+		#"delay": 2.5,
+		#"automatic": false,
+		#"bullets": 6,
+		#"left_bullets": 6,
+		#"zapas_bullets": 24,
+		#"icon": "res://Resources/ui_stuff_lol/weapon_basicshotgun.png",
+		#"incremental_reload": true,
+		#"increment_sound": "res://Sound/shotgun_increment",
+		#"increment_delay": 0.35,
+		#"type": "shotgun",
+		#"sway": 0.15,
+		#"soundondelay": true,
+		#"delaysound": "res://Sound/shotgun_cycle.wav",
+		#"sound": "res://Sound/shotgun.wav",
+	#},
+#]
+var WEAPONS = Global.WEAPONS
 
 func _ready() -> void:
 	if GamemodeManager.GAMEMODE == -1:
@@ -162,9 +164,9 @@ func _ready() -> void:
 		var DATE = Time.get_date_string_from_system()
 		var RNG = RandomNumberGenerator.new()
 		var RNG2 = RandomNumberGenerator.new()
-		DATE = int(str(DATE).replace("-", ""))
+		DATE = str(DATE).replace("-", "")
 		#print("date:" + str(hash(int(DATE/64))))
-		RNG.seed = hash(int(DATE))
+		RNG.seed = hash(DATE)
 		var rngnum = RNG.randi_range(0, 10)
 		var rngnum2 = RNG.randi_range(0, 14)
 		var rngnum3 = RNG.randi_range(0, 23)
@@ -195,9 +197,11 @@ func _ready() -> void:
 			"type": "gun",
 			"sway": 0.15,
 			"soundondelay": false,
-			"delaysound": "res://Sound/shotgun_cycle.wav"
+			"delaysound": "res://Sound/shotgun_cycle.wav",
+			"sound": "res://Sound/pistol-02.wav",
 		},
 			]
+			zondrespleasesaveusall = true
 		elif rngnum2 == 9 or rngnum4 == 12:
 			WEAPONS = [
 	{
@@ -214,15 +218,20 @@ func _ready() -> void:
 		"type": "grenade",
 		"sway": 0,
 		"soundondelay": false,
-		"delaysound": "res://Sound/shotgun_cycle.wav"
+		"delaysound": "res://Sound/shotgun_cycle.wav",
+		"sound": "res://Sound/pistol.wav",
 	},
 			]	
 		elif rngnum2 == 6 or 4:
 			for weapon in WEAPONS.size():
 				WEAPONS[weapon]["delay"] *= 3
+		elif rngnum == 3:
+			for weapon in WEAPONS.size():
+				WEAPONS[weapon]["incremental_reload"] = true
+				WEAPONS[weapon]["increment_delay"] = 0.4
 		elif rngnum2 == 12 or rngnum4 == 8:
 			unreliableweapon = true
-		if (rngnum3 == 15 or 8) or rngnum4 == 6:
+		if rngnum3 == 15 or rngnum4 == 6:
 			MAX_HEALTH = 60
 			health_bar.max_value = 60
 			HEALTH = 60
@@ -559,6 +568,10 @@ func shoot():
 				var bullet = P_BULLET.instantiate()
 				bullet.global_position = $Marker2D.global_position
 				bullet.shotgunbullet = false
+				if GamemodeManager.GAMEMODE == 3 and zondrespleasesaveusall:
+					bullet.magnum = true
+				else:
+					bullet.magnum = false
 				if GamemodeManager.GAMEMODE == 3 and unreliableweapon:
 					bullet.global_rotation = global_rotation+(sin(randf_range(-64, 64)) )/2.3
 				else:
@@ -585,8 +598,8 @@ func throw():
 		if DELAY >= WEAPONS[SELECTED_WEAPON]["delay"]:
 			var grenade = P_GRENADE.instantiate()
 			var targetdir = $GrenadeTarget.global_position - global_position
-			max_range2 = max_range + randf_range(0, 50)
-			if targetdir.length() > max_range2:
+			max_range2 = max_range + randi_range(0, 150)
+			if targetdir.length() > max_range:
 				$GrenadeTarget.global_position = global_position + targetdir.limit_length(max_range2)
 			grenade.global_position = $Marker2D.global_position
 			grenade.global_rotation = global_rotation + randf_range(0.9, 1.1)

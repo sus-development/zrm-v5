@@ -5,10 +5,15 @@
 [ext_resource type="Theme" uid="uid://d2wr8qi0mdxxq" path="res://ui.tres" id="2_7rmfm"]
 [ext_resource type="Script" uid="uid://beg25d2qybjtl" path="res://transitionmenu.gd" id="4_wc7w4"]
 
+[sub_resource type="LabelSettings" id="LabelSettings_wc7w4"]
+font_size = 18
+shadow_color = Color(0.25278953, 0.25278953, 0.25278953, 0.32900003)
+
 [node name="gamemode" type="Node2D" unique_id=268884075]
 script = ExtResource("1_x7xra")
 
 [node name="Background" parent="." unique_id=1198376867 instance=ExtResource("1_gxgwd")]
+z_index = -2
 
 [node name="Control" type="Control" parent="." unique_id=886379625]
 layout_mode = 3
@@ -124,6 +129,25 @@ autowrap_mode = 2
 justification_flags = 138
 clip_text = true
 text_overrun_behavior = 2
+
+[node name="Panel2" type="Panel" parent="Control/Panel" unique_id=800453972]
+z_index = -1
+layout_mode = 0
+offset_left = 421.0
+offset_top = 28.0
+offset_right = 634.0
+offset_bottom = 366.0
+
+[node name="Label" type="Label" parent="Control/Panel/Panel2" unique_id=1307445589]
+layout_mode = 0
+offset_right = 213.0
+offset_bottom = 31.0
+theme = ExtResource("2_7rmfm")
+theme_override_font_sizes/font_size = 24
+text = "$weaponselect"
+label_settings = SubResource("LabelSettings_wc7w4")
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="TransitionBlock" type="TextureRect" parent="." unique_id=195401901]
 visible = false

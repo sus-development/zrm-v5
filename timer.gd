@@ -10,9 +10,9 @@ func _ready() -> void:
 		# богато!
 		var DATE = Time.get_date_string_from_system()
 		var RNG = RandomNumberGenerator.new()
-		DATE = int(str(DATE).replace("-", ""))
+		DATE = str(DATE).replace("-", "")
 		#print("date:" + str(hash(int(DATE/64))))
-		RNG.seed = hash(int(DATE))
+		RNG.seed = hash(DATE)
 		rngnum = RNG.randi_range(0, 12)
 		if rngnum == 2:
 			medkitsbanned = true
@@ -69,6 +69,7 @@ func _on_timeout():
 			
 			# оптечки
 			if medkitsbanned:
+				# РКН заблокировал аптечки
 				pass
 			else:
 				var medkit_new = P_MEDKIT.instantiate()

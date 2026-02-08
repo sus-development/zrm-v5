@@ -32,6 +32,27 @@ const isDEMO = true # Данная настройка отключает маг�
 const SAVE_PATH = "user://save.cfg"
 var CONFIG = ConfigFile.new()
 var KT_URL = "https://kteam.veliona.no/"
+var WEAPONS = [
+		{
+		"name": tr("$starterpistol"),
+		"delay": 1,
+		"automatic": false,
+		"bullets": 12,
+		"left_bullets": 12,
+		"zapas_bullets": 48,
+		"icon": "res://Resources/ui_stuff_lol/weapon_starterpistol.png",
+		"incremental_reload": false,
+		"increment_sound": "res://Sound/shotgun_increment",
+		"increment_delay": 0,
+		"type": "gun",
+		"sway": 0.07,
+		"soundondelay": false,
+		"delaysound": "res://Sound/shotgun_cycle.wav",
+		"sound": "res://Sound/pistol.wav",
+	},
+]
+
+
 
 # Переменные
 var BGID

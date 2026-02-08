@@ -1,20 +1,21 @@
 extends RigidBody2D
 
 var SPEED = 1450
-const DAMAGE = 100
+var DAMAGE = 100
 var shotgunbullet
 var rngnum = 0
 var rngnum2 = 0
-var PIERCETHRU
+var magnum = false
+var PIERCETHRU = false
 
 func _ready() -> void:
 	if GamemodeManager.GAMEMODE == 3:
 		# трижды весело
 		var DATE = Time.get_date_string_from_system()
 		var RNG = RandomNumberGenerator.new()
-		DATE = int(str(DATE).replace("-", ""))
+		DATE = str(DATE).replace("-", "")
 		#print("date:" + str(hash(int(DATE/64))))
-		RNG.seed = hash(int(DATE))
+		RNG.seed = hash(DATE)
 		rngnum = RNG.randi_range(0, 7)
 		rngnum2 = RNG.randi_range(0, 9)
 		
@@ -29,6 +30,10 @@ func _ready() -> void:
 			PIERCETHRU = true
 		else:
 			PIERCETHRU = false
+	if magnum:
+		DAMAGE *= 2
+	else:
+		pass
 func _physics_process(delta):
 	linear_velocity = Vector2(0, -SPEED).rotated(global_rotation)
 	
