@@ -91,7 +91,8 @@ var inthehall = false
 		"type": "gun",
 		"sway": 0.07,
 		"soundondelay": false,
-		"delaysound": "res://Sound/shotgun_cycle.wav"
+		"delaysound": "res://Sound/shotgun_cycle.wav",
+		"sound": "res://Sound/pistol.wav",
 	},
 	{
 		"name": tr("$startermp"),
@@ -107,7 +108,8 @@ var inthehall = false
 		"type": "gun",
 		"sway": 0.09,
 		"soundondelay": false,
-		"delaysound": "res://Sound/shotgun_cycle.wav"
+		"delaysound": "res://Sound/shotgun_cycle.wav",
+		"sound": "res://Sound/pistol.wav",
 	},
 	{
 		"name": tr("$hegrenade"),
@@ -123,7 +125,8 @@ var inthehall = false
 		"type": "grenade",
 		"sway": 0,
 		"soundondelay": false,
-		"delaysound": "res://Sound/shotgun_cycle.wav"
+		"delaysound": "res://Sound/shotgun_cycle.wav",
+		"sound": "",
 	},
 	{
 		"name": tr("$basicshotgun"),
@@ -139,7 +142,8 @@ var inthehall = false
 		"type": "shotgun",
 		"sway": 0.15,
 		"soundondelay": true,
-		"delaysound": "res://Sound/shotgun_cycle.wav"
+		"delaysound": "res://Sound/shotgun_cycle.wav",
+		"sound": "res://Sound/shotgun.wav",
 	},
 ]
 
@@ -567,10 +571,7 @@ func shoot():
 			WEAPONS[SELECTED_WEAPON]["left_bullets"] -= 1
 			WEAPONS[SELECTED_WEAPON]["left_bullets"] = max(0, WEAPONS[SELECTED_WEAPON]["left_bullets"])
 			$ShootSound.pitch_scale = randf_range(0.93, 1.06)
-			if WEAPONS[SELECTED_WEAPON]["type"] == "shotgun":
-				$ShootSound.stream = load("res://Sound/shotgun.wav")
-			else:
-				$ShootSound.stream = load("res://Sound/pistol.wav")	
+			$ShootSound.stream = load(WEAPONS[SELECTED_WEAPON]["sound"])
 			$ShootSound.play()
 			DELAY = 0
 			#print(DELAY)
