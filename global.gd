@@ -33,8 +33,10 @@ const SAVE_PATH = "user://save.cfg"
 var CONFIG = ConfigFile.new()
 var KT_URL = "https://kteam.veliona.no/"
 var WEAPONS = [
-		{
+	{
 		"name": tr("$starterpistol"),
+		"id": 1,
+		"class": "sidearm",
 		"delay": 1,
 		"automatic": false,
 		"bullets": 12,
@@ -50,8 +52,84 @@ var WEAPONS = [
 		"delaysound": "res://Sound/shotgun_cycle.wav",
 		"sound": "res://Sound/pistol.wav",
 	},
+	{
+		"name": tr("$startermp"),
+		"id": 2,
+		"class": "primary",
+		"delay": 0.35,
+		"automatic": true,
+		"bullets": 30,
+		"left_bullets": 30,
+		"zapas_bullets": 30,
+		"icon": "res://Resources/ui_stuff_lol/weapon_startermp.png",
+		"incremental_reload": false,
+		"increment_sound": "res://Sound/shotgun_increment",
+		"increment_delay": 0,
+		"type": "gun",
+		"sway": 0.09,
+		"soundondelay": false,
+		"delaysound": "res://Sound/shotgun_cycle.wav",
+		"sound": "res://Sound/pistol.wav",
+	},
+	{
+		"name": tr("$hegrenade"),
+		"id": 3,
+		"class": "utility",
+		"delay": 1,
+		"automatic": false,
+		"bullets": 1,
+		"left_bullets": 1,
+		"zapas_bullets": 4,
+		"icon": "res://Resources/ui_stuff_lol/weapon_hegrenade.png",
+		"incremental_reload": false,
+		"increment_sound": "res://Sound/shotgun_increment",
+		"increment_delay": 0,
+		"type": "grenade",
+		"sway": 0,
+		"soundondelay": false,
+		"delaysound": "res://Sound/shotgun_cycle.wav",
+		"sound": "",
+	},
+	{
+		"name": tr("$basicshotgun"),
+		"id": 4,
+		"class": "primary",
+		"delay": 2.5,
+		"automatic": false,
+		"bullets": 6,
+		"left_bullets": 6,
+		"zapas_bullets": 24,
+		"icon": "res://Resources/ui_stuff_lol/weapon_basicshotgun.png",
+		"incremental_reload": true,
+		"increment_sound": "res://Sound/shotgun_increment",
+		"increment_delay": 0.35,
+		"type": "shotgun",
+		"sway": 0.15,
+		"soundondelay": true,
+		"delaysound": "res://Sound/shotgun_cycle.wav",
+		"sound": "res://Sound/shotgun.wav",
+	},
 ]
-
+var ALLWEAPONS = [
+	{
+		"id": 1, # PP-182
+		"class": "sidearm",
+	},
+	{
+		"id": 2, # MP5
+		"class": "primary",
+	},
+	{
+		"id": 3, # AB-13 граната
+		"class": "utility",
+	},
+	{
+		"id": 4, # Demler 240
+		"class": "primary",
+	}
+]
+var SAVED_WEAPONS = []
+var EQUIPPED_WEAPONS = []
 
 
 # Переменные
@@ -95,8 +173,17 @@ func _ready() -> void:
 	if CONFIG.get_value("save", "zcoins"):
 		ZCOINS = CONFIG.get_value("save", "zcoins")
 		
-
+	if CONFIG.get_value("items", "weapons"):
+		SAVED_WEAPONS = CONFIG.get_value("items", "weapons")
+	else:
+		SAVED_WEAPONS.append(ALLWEAPONS[0])
 		
+	for weapon in SAVED_WEAPONS.size():
+		for allweapons in WEAPONS.size():
+			if SAVED_WEAPONS[weapon]["id"] == WEAPONS[allweapons]["id"]:
+				#print("yeee" + str(weapon)+ " " + str(allweapons))
+				EQUIPPED_WEAPONS.append(WEAPONS[allweapons])
+			
 	# tf2 reference ALERT
 	# NOTE: я скомпилированную игру не могу запустить, надо закомментировать rsiughdsugjh
 #	if !FileAccess.file_exists("res://_IMPORTANT_IMAGE_DONT_DELETE_INACHE_PISEC!!.jpg"):

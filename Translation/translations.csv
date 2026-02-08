@@ -81,3 +81,8 @@ $challengesdesc,"Try out something new every day, even without internet!",Про
 ",即使沒有網路，也要每天嘗試新事物！,"¡Prueba algo nuevo cada día, incluso sin Internet! ","Kokeile jotain uutta joka päivää, vaikka jos ei olisi internettiä!","Probvajcie štości novaje kožny dzień, navat biez internetu! ","Próbuj czegoś nowego każdego dnia, nawet bez internetu! 
 ","🔄 🕳 🆕 🔠 📆, 🍵 🕸 ❗","Izmēģiniet kaut ko jaunu katru dienu, pat bez interneta! ",Probujte chto-to novoe kazhdyj den dazhe bez interneta!
 $basicshotgun,Demler 240,Demler 240,Demler 240,Demler 240,Demler 240,Demler 240,Demler 240,Demler 240,Demler 240,Demler 240,Demler 240
+$weaponselect,Weapons,Оружия,,,,Aseet,,,,,
+$equip,Equip,Экипировать,,,,Varustaa,,,,,
+$primary,Primary,Основное,,,,,,,,,
+$sidearm,Sidearm,Лёгкое,,,,,,,,,
+$utility,Utility,Вспомогательное,,,,,,,,,

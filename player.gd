@@ -77,79 +77,30 @@ var max_range2 = 0
 var inthehall = false
 @export var SELECTED_WEAPON = 0
 
-#@export var WEAPONS = [
-	#{
-		#"name": tr("$starterpistol"),
-		#"delay": 1,
-		#"automatic": false,
-		#"bullets": 12,
-		#"left_bullets": 12,
-		#"zapas_bullets": 48,
-		#"icon": "res://Resources/ui_stuff_lol/weapon_starterpistol.png",
-		#"incremental_reload": false,
-		#"increment_sound": "res://Sound/shotgun_increment",
-		#"increment_delay": 0,
-		#"type": "gun",
-		#"sway": 0.07,
-		#"soundondelay": false,
-		#"delaysound": "res://Sound/shotgun_cycle.wav",
-		#"sound": "res://Sound/pistol.wav",
-	#},
-	#{
-		#"name": tr("$startermp"),
-		#"delay": 0.3,
-		#"automatic": true,
-		#"bullets": 30,
-		#"left_bullets": 30,
-		#"zapas_bullets": 30,
-		#"icon": "res://Resources/ui_stuff_lol/weapon_startermp.png",
-		#"incremental_reload": false,
-		#"increment_sound": "res://Sound/shotgun_increment",
-		#"increment_delay": 0,
-		#"type": "gun",
-		#"sway": 0.09,
-		#"soundondelay": false,
-		#"delaysound": "res://Sound/shotgun_cycle.wav",
-		#"sound": "res://Sound/pistol.wav",
-	#},
-	#{
-		#"name": tr("$hegrenade"),
-		#"delay": 1,
-		#"automatic": false,
-		#"bullets": 1,
-		#"left_bullets": 1,
-		#"zapas_bullets": 4,
-		#"icon": "res://Resources/ui_stuff_lol/weapon_hegrenade.png",
-		#"incremental_reload": false,
-		#"increment_sound": "res://Sound/shotgun_increment",
-		#"increment_delay": 0,
-		#"type": "grenade",
-		#"sway": 0,
-		#"soundondelay": false,
-		#"delaysound": "res://Sound/shotgun_cycle.wav",
-		#"sound": "",
-	#},
-	#{
-		#"name": tr("$basicshotgun"),
-		#"delay": 2.5,
-		#"automatic": false,
-		#"bullets": 6,
-		#"left_bullets": 6,
-		#"zapas_bullets": 24,
-		#"icon": "res://Resources/ui_stuff_lol/weapon_basicshotgun.png",
-		#"incremental_reload": true,
-		#"increment_sound": "res://Sound/shotgun_increment",
-		#"increment_delay": 0.35,
-		#"type": "shotgun",
-		#"sway": 0.15,
-		#"soundondelay": true,
-		#"delaysound": "res://Sound/shotgun_cycle.wav",
-		#"sound": "res://Sound/shotgun.wav",
-	#},
-#]
-var WEAPONS = Global.WEAPONS
+var WEAPONS = []
 
 func _ready() -> void:
+	WEAPONS = Global.EQUIPPED_WEAPONS.duplicate(true)
+	if GamemodeManager.GAMEMODE == 1:
+		WEAPONS = [{
+		"name": tr("$starterpistol"),
+		"id": 1,
+		"class": "sidearm",
+		"delay": 1,
+		"automatic": false,
+		"bullets": 12,
+		"left_bullets": 12,
+		"zapas_bullets": 48,
+		"icon": "res://Resources/ui_stuff_lol/weapon_starterpistol.png",
+		"incremental_reload": false,
+		"increment_sound": "res://Sound/shotgun_increment",
+		"increment_delay": 0,
+		"type": "gun",
+		"sway": 0.07,
+		"soundondelay": false,
+		"delaysound": "res://Sound/shotgun_cycle.wav",
+		"sound": "res://Sound/pistol.wav",
+	}]
 	if GamemodeManager.GAMEMODE == -1:
 		print("forcesnow: " + str(GamemodeManager.MODGAME["force_snow"]))
 		print("snowinwinter: " + str(GamemodeManager.MODGAME["snowinwinter"]))
