@@ -81,7 +81,7 @@ var WEAPONS = []
 
 func _ready() -> void:
 	WEAPONS = Global.EQUIPPED_WEAPONS.duplicate(true)
-	if GamemodeManager.GAMEMODE == 1:
+	if GamemodeManager.GAMEMODE == 1 or (GamemodeManager.GAMEMODE == -1 and !GamemodeManager.MODGAME["allow_weapons"]):
 		WEAPONS = [{
 		"name": tr("$starterpistol"),
 		"id": 1,

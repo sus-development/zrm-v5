@@ -110,24 +110,7 @@ var WEAPONS = [
 		"sound": "res://Sound/shotgun.wav",
 	},
 ]
-var ALLWEAPONS = [
-	{
-		"id": 1, # PP-182
-		"class": "sidearm",
-	},
-	{
-		"id": 2, # MP5
-		"class": "primary",
-	},
-	{
-		"id": 3, # AB-13 граната
-		"class": "utility",
-	},
-	{
-		"id": 4, # Demler 240
-		"class": "primary",
-	}
-]
+var ALLWEAPONS = []
 var SAVED_WEAPONS = []
 var EQUIPPED_WEAPONS = []
 
@@ -152,6 +135,11 @@ func _input(event: InputEvent) -> void:
 	
 func _ready() -> void:
 	CONFIG.load(SAVE_PATH)
+	
+	ALLWEAPONS = []	
+	for i in WEAPONS.size():
+		var saveweaponarray = {"id": WEAPONS[i]["id"], "class": WEAPONS[i]["class"]}
+		ALLWEAPONS.append(saveweaponarray)	
 	if !CONFIG.get_value("settings", "lang"):
 		TranslationServer.set_locale("en")
 	else:
