@@ -17,21 +17,34 @@ func _ready() -> void:
 			if Global.ALLWEAPONS[i]["class"] == "utility":
 				if Global.ALLWEAPONS[i]["id"] == Global.WEAPONS[i2]["id"]:
 					utility.add_item(Global.WEAPONS[i2]["name"], Global.ALLWEAPONS[i]["id"])	
+					
+	for i in Global.SAVED_WEAPONS.size():
+		if Global.SAVED_WEAPONS[i]["class"] == "primary":
+			for i2 in primary.item_count:
+				if primary.get_item_id(i2) == Global.SAVED_WEAPONS[i]["id"]:	
+					primary.select(i2)
+					break
+		if Global.SAVED_WEAPONS[i]["class"] == "sidearm":
+			for i2 in sidearm.item_count:
+				if sidearm.get_item_id(i2) == Global.SAVED_WEAPONS[i]["id"]:	
+					sidearm.select(i2)
+					break
+		if Global.SAVED_WEAPONS[i]["class"] == "utility":
+			for i2 in utility.item_count:
+				if utility.get_item_id(i2) == Global.SAVED_WEAPONS[i]["id"]:	
+					utility.select(i2)		
+					break
 
 
 func _on_equip_button_pressed() -> void:
 	Global.EQUIPPED_WEAPONS = []
 	Global.SAVED_WEAPONS = []
-	for i in Global.WEAPONS.size():
-		if utility.get_selected_id() == Global.WEAPONS[i]["id"]:
-			Global.EQUIPPED_WEAPONS.append(Global.WEAPONS[i])	
-			Global.SAVED_WEAPONS.append(Global.ALLWEAPONS[i])
-		if sidearm.get_selected_id() == Global.WEAPONS[i]["id"]:
-			Global.EQUIPPED_WEAPONS.append(Global.WEAPONS[i])
-			Global.SAVED_WEAPONS.append(Global.ALLWEAPONS[i])
-		if primary.get_selected_id() == Global.WEAPONS[i]["id"]:
-			Global.EQUIPPED_WEAPONS.append(Global.WEAPONS[i])
-			Global.SAVED_WEAPONS.append(Global.ALLWEAPONS[i])
+	for i in [primary.get_selected_id(), sidearm.get_selected_id(), utility.get_selected_id()]:
+		for i2 in Global.WEAPONS.size():
+			if Global.WEAPONS[i2]["id"] == i:
+				Global.EQUIPPED_WEAPONS.append(Global.WEAPONS[i2])	
+				Global.SAVED_WEAPONS.append(Global.ALLWEAPONS[i2])
+				break
 	Global.CONFIG.set_value("items", "weapons", Global.SAVED_WEAPONS)
 	Global.CONFIG.save(Global.SAVE_PATH)
 
