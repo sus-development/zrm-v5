@@ -173,10 +173,10 @@ func _ready() -> void:
 		"sound": "res://Sound/pistol.wav",
 	},
 			]	
-		elif rngnum2 == 6 or 4:
+		elif rngnum2 == 5 or rngnum2 == 8:
 			for weapon in WEAPONS.size():
 				WEAPONS[weapon]["delay"] *= 3
-		elif rngnum == 3:
+		elif rngnum2 == 3:
 			for weapon in WEAPONS.size():
 				WEAPONS[weapon]["incremental_reload"] = true
 				WEAPONS[weapon]["increment_delay"] = 0.4

@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://db8yny8uiwun1"]
+[gd_scene format=3 uid="uid://db8yny8uiwun1"]
 
 [ext_resource type="Texture2D" uid="uid://dtx8bje4ie0ja" path="res://bgs/1.png" id="1_vrd3a"]
 [ext_resource type="Script" uid="uid://baotmr4fuvmav" path="res://background.gd" id="2_pv48m"]
@@ -7,15 +7,15 @@
 [sub_resource type="LabelSettings" id="LabelSettings_i7s6n"]
 font_size = 11
 
-[node name="Background" type="Node2D"]
+[node name="Background" type="Node2D" unique_id=429680660]
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2024160677]
 position = Vector2(640, 360)
 scale = Vector2(0.666667, 0.666667)
 texture = ExtResource("1_vrd3a")
 script = ExtResource("2_pv48m")
 
-[node name="Label" type="Label" parent="."]
+[node name="Label" type="Label" parent="." unique_id=548527698]
 offset_left = 954.0
 offset_top = 703.0
 offset_right = 1277.0
