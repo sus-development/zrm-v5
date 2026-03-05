@@ -94,6 +94,7 @@ func _ready() -> void:
 		"icon": "res://Resources/ui_stuff_lol/weapon_starterpistol.png",
 		"incremental_reload": false,
 		"increment_sound": "res://Sound/shotgun_increment",
+		"incremental_minusroundonreload": false,
 		"increment_delay": 0,
 		"type": "gun",
 		"sway": 0.07,
@@ -115,9 +116,9 @@ func _ready() -> void:
 		var DATE = Time.get_date_string_from_system()
 		var RNG = RandomNumberGenerator.new()
 		var RNG2 = RandomNumberGenerator.new()
-		DATE = str(DATE).replace("-", "")
+		DATE = int(str(DATE).replace("-", ""))
 		#print("date:" + str(hash(int(DATE/64))))
-		RNG.seed = hash(DATE)
+		RNG.seed = hash(DATE^15631)
 		var rngnum = RNG.randi_range(0, 10)
 		var rngnum2 = RNG.randi_range(0, 14)
 		var rngnum3 = RNG.randi_range(0, 23)
@@ -144,6 +145,7 @@ func _ready() -> void:
 			"icon": "res://Resources/ui_stuff_lol/weapon_starterpistol.png",
 			"incremental_reload": false,
 			"increment_sound": "res://Sound/shotgun_increment",
+			"incremental_minusroundonreload": false,
 			"increment_delay": 0,
 			"type": "gun",
 			"sway": 0.15,
@@ -165,6 +167,7 @@ func _ready() -> void:
 		"icon": "res://Resources/ui_stuff_lol/weapon_hegrenade.png",
 		"incremental_reload": false,
 		"increment_sound": "res://Sound/shotgun_increment",
+		"incremental_minusroundonreload": false,
 		"increment_delay": 0,
 		"type": "grenade",
 		"sway": 0,
@@ -362,7 +365,7 @@ func _process(delta: float):
 		if $"../../GlobalInterface/joysticks/VirtualJoystick2" and $"../../GlobalInterface/joysticks/VirtualJoystick2".is_pressed:
 			rotation = $"../../GlobalInterface/joysticks/VirtualJoystick2".output.angle()
 			rotate(PI / 2)
-	if (HEALTH <= 0) and ($Person != null) or (GamemodeManager.GAMEMODE == 2 and COLDNESS >= 100):
+	if (HEALTH <= 0) and ($Person != null) or (GamemodeManager.GAMEMODE == 2 and COLDNESS >= MAX_COLDNESS):
 		$"../PauseManager".PAUSE = true
 		$"../PauseManager".PAUSELOCK = true
 		$Person.queue_free()
@@ -580,6 +583,14 @@ func bullets_reload():
 			if WEAPONS[SELECTED_WEAPON]["incremental_reload"]:
 				if WEAPONS[SELECTED_WEAPON]["left_bullets"] < WEAPONS[SELECTED_WEAPON]["bullets"] and WEAPONS[SELECTED_WEAPON]["zapas_bullets"] >= 1:
 					maybeselectedweapon = SELECTED_WEAPON
+					
+					if WEAPONS[SELECTED_WEAPON]["incremental_minusroundonreload"] and WEAPONS[SELECTED_WEAPON]["left_bullets"] > 0 and !RELOADING:
+						INCREMENT_DELAY = 0-WEAPONS[SELECTED_WEAPON]["increment_delay"]
+						WEAPONS[SELECTED_WEAPON]["left_bullets"] -= 1
+					elif !RELOADING:
+						INCREMENT_DELAY = 0-WEAPONS[SELECTED_WEAPON]["increment_delay"]/2
+					else:
+						pass
 					ogroundamount = WEAPONS[SELECTED_WEAPON]["left_bullets"]
 					RELOADING = true
 			else:

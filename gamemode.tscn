@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://bcvdhtfrjqpw8" path="res://gamemode.gd" id="1_x7xra"]
 [ext_resource type="Theme" uid="uid://d2wr8qi0mdxxq" path="res://ui.tres" id="2_7rmfm"]
 [ext_resource type="Script" uid="uid://beg25d2qybjtl" path="res://transitionmenu.gd" id="4_wc7w4"]
-[ext_resource type="Script" uid="uid://deakb3acw62wt" path="res://weaponselector.gd" id="5_l6b64"]
+[ext_resource type="Script" path="res://weaponselector.gd" id="5_l6b64"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_wc7w4"]
 font_size = 18

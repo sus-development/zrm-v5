@@ -13,9 +13,9 @@ func _ready() -> void:
 		# трижды весело
 		var DATE = Time.get_date_string_from_system()
 		var RNG = RandomNumberGenerator.new()
-		DATE = str(DATE).replace("-", "")
+		DATE = int(str(DATE).replace("-", ""))
 		#print("date:" + str(hash(int(DATE/64))))
-		RNG.seed = hash(DATE)
+		RNG.seed = hash(DATE^1654)
 		rngnum = RNG.randi_range(0, 7)
 		rngnum2 = RNG.randi_range(0, 9)
 		
