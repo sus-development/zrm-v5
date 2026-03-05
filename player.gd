@@ -65,6 +65,7 @@ var maybeselectedweapon = 0
 var FORCE_RUNLOCK = false
 var shake = false
 var zondrespleasesaveusall = false
+var weightaccum = 0
 @export var ded: bool = false
 
 @export var REGULAR_SPEED = 300
@@ -81,6 +82,7 @@ var WEAPONS = []
 
 func _ready() -> void:
 	WEAPONS = Global.EQUIPPED_WEAPONS.duplicate(true)
+	
 	if GamemodeManager.GAMEMODE == 1 or (GamemodeManager.GAMEMODE == -1 and !GamemodeManager.MODGAME["allow_weapons"]):
 		WEAPONS = [{
 		"name": tr("$starterpistol"),
@@ -98,6 +100,7 @@ func _ready() -> void:
 		"increment_delay": 0,
 		"type": "gun",
 		"sway": 0.07,
+		"weight": 0.26,
 		"soundondelay": false,
 		"delaysound": "res://Sound/shotgun_cycle.wav",
 		"sound": "res://Sound/pistol.wav",
@@ -149,6 +152,7 @@ func _ready() -> void:
 			"increment_delay": 0,
 			"type": "gun",
 			"sway": 0.15,
+			"weight": 0.30,
 			"soundondelay": false,
 			"delaysound": "res://Sound/shotgun_cycle.wav",
 			"sound": "res://Sound/pistol-02.wav",
@@ -171,6 +175,7 @@ func _ready() -> void:
 		"increment_delay": 0,
 		"type": "grenade",
 		"sway": 0,
+		"weight": 0.17,
 		"soundondelay": false,
 		"delaysound": "res://Sound/shotgun_cycle.wav",
 		"sound": "res://Sound/pistol.wav",
@@ -218,12 +223,14 @@ func _ready() -> void:
 				inventory_bar.queue_free()
 			if coldness_bar:
 				coldness_bar.queue_free()
+	for weapon in WEAPONS.size():
+		weightaccum += WEAPONS[weapon]["weight"]
+	
 	weaponhint_show()
 
 
 func _physics_process(delta: float):
 	#TranslationServer.set_locale("be")
-	
 	if Input.is_action_pressed("left"):
 		position.x -= SPEED * delta
 	if Input.is_action_pressed("right"):
@@ -301,7 +308,7 @@ func _physics_process(delta: float):
 				#	$Camera2D.zoom = Vector2(0.987, 0.987)
 				if (VINOSLIVOST >= 0):
 					SPEED = RUN_SPEED
-					VINOSLIVOST -= 19.5 * delta
+					VINOSLIVOST -= (9.5 + (weightaccum**2)*15.6) * delta
 				else:
 					SPEED = REGULAR_SPEED
 					fov_down()
@@ -310,7 +317,7 @@ func _physics_process(delta: float):
 			else:
 				SPEED = REGULAR_SPEED
 				if (VINOSLIVOST <= MAX_VINOSLIVOST) and (SPEED != RUN_SPEED):
-					VINOSLIVOST += 6.5 * delta
+					VINOSLIVOST += (3.5 / (1+(weightaccum**2)*0.6)) * delta
 					fov_down()
 		#					$Camera2D.zoom = Vector2(1, 1)
 			if (VINOSLIVOST <= 35) and !Input.is_action_pressed("run") or FORCE_RUNLOCK:
