@@ -312,7 +312,7 @@ func _physics_process(delta: float):
 				else:
 					SPEED = REGULAR_SPEED
 					fov_down()
-		#					$Camera2D.zoom = Vector2(1, 1)
+		#			$Camera2D.zoom = Vector2(1, 1)
 					RUNLOCK = 1
 			else:
 				SPEED = REGULAR_SPEED

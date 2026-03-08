@@ -22,6 +22,7 @@ func _on_timeout() -> void:
 	if GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["zondre_donotspawn"]:
 		pass
 	else:
-		var zondrenew = ZONDRE.instantiate()
-		zondrenew.position = $"..".position
-		get_parent().get_parent().add_child(zondrenew)
+		pass
+		#var zondrenew = ZONDRE.instantiate()
+		#zondrenew.position = $"..".position
+		#get_parent().get_parent().add_child(zondrenew)
