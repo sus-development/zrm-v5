@@ -5,7 +5,7 @@ var config = ConfigFile.new()
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	config.load(Global.SAVE_PATH)
-	if config.get_value("settings", "ignoreupd", "0") == 0:
+	if config.get_value("settings", "ignoreupd") == 0:
 		button_pressed = false
 	else: 
 		button_pressed = true

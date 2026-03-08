@@ -23,6 +23,6 @@ func _on_timeout() -> void:
 		pass
 	else:
 		pass
-		#var zondrenew = ZONDRE.instantiate()
-		#zondrenew.position = $"..".position
-		#get_parent().get_parent().add_child(zondrenew)
+		var zondrenew = ZONDRE.instantiate()
+		zondrenew.position = $"..".position
+		get_parent().get_parent().add_child(zondrenew)

@@ -13,6 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://bnoiah2jgxblr" path="res://Resources/aims/default.png" id="9_vef74"]
 [ext_resource type="Script" uid="uid://oer2u1m0p56i" path="res://aim-ingame.gd" id="10_hve3p"]
 [ext_resource type="PackedScene" uid="uid://c8g7xesdcnxqo" path="res://player-bot.tscn" id="13_lc2xo"]
+[ext_resource type="PackedScene" uid="uid://dn12aa5x7hr5v" path="res://zondre.tscn" id="14_215e1"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_iotsf"]
 vertices = PackedVector2Array(5478.6797, -414.1797, 5442.297, 5439.9375, -369.27344, 5434.047, -401.71875, -435.8125)
@@ -100,12 +101,10 @@ script = ExtResource("10_hve3p")
 environment = SubResource("Environment_iotsf")
 
 [node name="player2" parent="." unique_id=532043823 instance=ExtResource("13_lc2xo")]
+z_index = 2
 position = Vector2(2696, 1790)
 
-[node name="player3" parent="." unique_id=1465723619 instance=ExtResource("13_lc2xo")]
-position = Vector2(2385, 1640)
-
-[node name="player4" parent="." unique_id=2060408101 instance=ExtResource("13_lc2xo")]
-position = Vector2(2631, 2175)
+[node name="Zondre" parent="." unique_id=588703430 instance=ExtResource("14_215e1")]
+position = Vector2(2401, 1478)
 
 [connection signal="timeout" from="Timer" to="Timer" method="_on_timeout"]
