@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://bshfbsu15v3v1"]
+[gd_scene format=3 uid="uid://bshfbsu15v3v1"]
 
 [ext_resource type="Theme" uid="uid://d2wr8qi0mdxxq" path="res://ui.tres" id="1_3mkkl"]
 [ext_resource type="Texture2D" uid="uid://ccrwp3ybxv88m" path="res://Resources/vignette_black.png" id="1_ibotj"]
@@ -54,25 +54,23 @@ _data = {
 [sub_resource type="LabelSettings" id="LabelSettings_y7fw5"]
 font_size = 48
 
-[node name="UI" type="CanvasLayer"]
+[node name="UI" type="CanvasLayer" unique_id=301266695]
 
-[node name="VignetteBlack" type="Sprite2D" parent="."]
+[node name="VignetteBlack" type="Sprite2D" parent="." unique_id=590658195]
 z_index = -5
 position = Vector2(640, 360)
 texture = ExtResource("1_ibotj")
 
-[node name="VignetteRed" type="Sprite2D" parent="."]
+[node name="VignetteRed" type="Sprite2D" parent="." unique_id=31154900]
 modulate = Color(1, 1, 1, 0)
 position = Vector2(640, 360)
 texture = ExtResource("1_y4yjw")
 script = ExtResource("2_waa4j")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="VignetteRed"]
-libraries = {
-&"": SubResource("AnimationLibrary_ok7cu")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="VignetteRed" unique_id=660923657]
+libraries/ = SubResource("AnimationLibrary_ok7cu")
 
-[node name="SpeedBar" type="ProgressBar" parent="."]
+[node name="SpeedBar" type="ProgressBar" parent="." unique_id=1040921933]
 offset_left = 30.0
 offset_top = 33.0
 offset_right = 230.0
@@ -80,7 +78,7 @@ offset_bottom = 63.0
 theme = ExtResource("1_3mkkl")
 show_percentage = false
 
-[node name="Speed" type="Label" parent="SpeedBar"]
+[node name="Speed" type="Label" parent="SpeedBar" unique_id=355661136]
 layout_mode = 0
 offset_top = 3.0
 offset_right = 200.0
@@ -89,12 +87,12 @@ text = "Выносливость: 100/100"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="SpeedIcon" type="Sprite2D" parent="SpeedBar"]
+[node name="SpeedIcon" type="Sprite2D" parent="SpeedBar" unique_id=492583393]
 position = Vector2(-15, 15)
 scale = Vector2(0.2109375, 0.210937)
 texture = ExtResource("2_iev70")
 
-[node name="BulletsBar" type="ProgressBar" parent="."]
+[node name="BulletsBar" type="ProgressBar" parent="." unique_id=219366941]
 offset_left = 30.0
 offset_top = 66.0
 offset_right = 230.0
@@ -104,7 +102,7 @@ max_value = 12.0
 value = 12.0
 show_percentage = false
 
-[node name="Bullets" type="Label" parent="BulletsBar"]
+[node name="Bullets" type="Label" parent="BulletsBar" unique_id=1450895127]
 layout_mode = 0
 offset_top = 2.0
 offset_right = 200.0
@@ -114,12 +112,12 @@ text = "Пули: 12/12"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="BulletsIcon" type="Sprite2D" parent="BulletsBar"]
+[node name="BulletsIcon" type="Sprite2D" parent="BulletsBar" unique_id=70487417]
 position = Vector2(-16.000008, 14.000003)
 scale = Vector2(0.21874987, 0.217968)
 texture = ExtResource("3_qg45p")
 
-[node name="HealthBar" type="ProgressBar" parent="."]
+[node name="HealthBar" type="ProgressBar" parent="." unique_id=889700881]
 offset_left = 30.0
 offset_top = 3.0
 offset_right = 230.0
@@ -128,7 +126,7 @@ theme = ExtResource("1_3mkkl")
 value = 12.0
 show_percentage = false
 
-[node name="Health" type="Label" parent="HealthBar"]
+[node name="Health" type="Label" parent="HealthBar" unique_id=93906727]
 layout_mode = 0
 offset_top = 3.0
 offset_right = 200.0
@@ -138,12 +136,12 @@ text = "Здоровье: 12/12"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="HealthIcon" type="Sprite2D" parent="HealthBar"]
+[node name="HealthIcon" type="Sprite2D" parent="HealthBar" unique_id=645245824]
 position = Vector2(-15, 13)
 scale = Vector2(0.2109375, 0.210937)
 texture = ExtResource("4_4pw5h")
 
-[node name="InventoryBar" type="ProgressBar" parent="."]
+[node name="InventoryBar" type="ProgressBar" parent="." unique_id=97672511]
 offset_left = 261.0
 offset_top = 2.0
 offset_right = 461.0
@@ -153,7 +151,7 @@ max_value = 12.0
 value = 12.0
 show_percentage = false
 
-[node name="Inventory" type="Label" parent="InventoryBar"]
+[node name="Inventory" type="Label" parent="InventoryBar" unique_id=840186104]
 layout_mode = 0
 offset_top = 2.0
 offset_right = 200.0
@@ -163,12 +161,12 @@ text = "Инвентарь: 100/100"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="InventoryIcon" type="Sprite2D" parent="InventoryBar"]
+[node name="InventoryIcon" type="Sprite2D" parent="InventoryBar" unique_id=2135502523]
 position = Vector2(-15.5, 14.500024)
 scale = Vector2(0.242187, 0.22656213)
 texture = ExtResource("8_ok7cu")
 
-[node name="ColdnessBar" type="ProgressBar" parent="."]
+[node name="ColdnessBar" type="ProgressBar" parent="." unique_id=1919991862]
 offset_left = 261.0
 offset_top = 35.0
 offset_right = 461.0
@@ -178,7 +176,7 @@ max_value = 12.0
 value = 12.0
 show_percentage = false
 
-[node name="Coldness" type="Label" parent="ColdnessBar"]
+[node name="Coldness" type="Label" parent="ColdnessBar" unique_id=822381532]
 layout_mode = 0
 offset_top = 2.0
 offset_right = 200.0
@@ -188,12 +186,12 @@ text = "Холод: 100/100"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ColdnessIcon" type="Sprite2D" parent="ColdnessBar"]
+[node name="ColdnessIcon" type="Sprite2D" parent="ColdnessBar" unique_id=1172631313]
 position = Vector2(-15.5, 14.000001)
 scale = Vector2(0.242187, 0.23437499)
 texture = ExtResource("9_irxef")
 
-[node name="WeaponText" type="Label" parent="."]
+[node name="WeaponText" type="Label" parent="." unique_id=424893173]
 modulate = Color(1, 1, 1, 0)
 offset_left = 71.0
 offset_top = 106.0
@@ -203,12 +201,12 @@ theme = ExtResource("1_3mkkl")
 text = "Выбран: ПК-182
 Оружие выбирается колёсиком мыши"
 
-[node name="WeaponIcon" type="Sprite2D" parent="WeaponText"]
+[node name="WeaponIcon" type="Sprite2D" parent="WeaponText" unique_id=1174016771]
 position = Vector2(-33, 19)
 scale = Vector2(0.23046875, 0.23046875)
 texture = ExtResource("10_irxef")
 
-[node name="Score" type="Label" parent="."]
+[node name="Score" type="Label" parent="." unique_id=152629356]
 anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0

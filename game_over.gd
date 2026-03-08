@@ -13,3 +13,7 @@ func _on_go_to_menu_pressed() -> void:
 	$"../PauseManager".PAUSE = false
 	get_tree().paused = false
 	get_tree().change_scene_to_file("res://menu.tscn")
+
+
+func _on_retry_pressed():
+	get_tree().change_scene_to_file(GamemodeManager.GAMEMODEINFO["scene"])

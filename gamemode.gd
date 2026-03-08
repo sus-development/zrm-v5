@@ -9,8 +9,16 @@ var GMNAME = null
 var GMDESC = null
 var GAMEMODE = null
 
+# для удобства
+var CHALLENGE = {
+	"name": tr("$challenges"),
+	"description": tr("$challengesdesc"),
+	"scene": "res://game.tscn",
+	"gamemode": 3,
+}
 var GAMEMODES = [
 	{
+	
 		"name": tr("$classicmodename"),
 		"description": tr("$classicmodedesc"),
 		"scene": "res://game.tscn",
@@ -42,6 +50,18 @@ func _ready() -> void:
 		$Control/Panel/ScrollContainer/VBoxContainer/HBoxContainer/ShopButton.disabled = true
 		$Control/Panel/ScrollContainer/VBoxContainer/HBoxContainer/StorageButton.disabled = true
 	
+	var newchallengebtn = BUTTONGAMEMODE.instantiate()
+	newchallengebtn.text = CHALLENGE["name"]
+	newchallengebtn.GMNAME = CHALLENGE["name"]
+	newchallengebtn.GMDESC = CHALLENGE["description"]
+	newchallengebtn.SCENE = CHALLENGE["scene"]
+	newchallengebtn.GMODE = CHALLENGE["gamemode"]
+	newchallengebtn.CHALLENGE = true
+	newchallengebtn.MODGAME = null
+	newchallengebtn.size_flags_horizontal = 3
+	$Control/Panel/ScrollContainer/VBoxContainer/ChallengeContainer.add_child(newchallengebtn)
+	
+	
 	for sus in GAMEMODES.size():
 		var newbtn = BUTTONGAMEMODE.instantiate()
 		newbtn.text = GAMEMODES[sus]["name"]
@@ -49,8 +69,8 @@ func _ready() -> void:
 		newbtn.GMDESC = GAMEMODES[sus]["description"]
 		newbtn.SCENE = GAMEMODES[sus]["scene"]
 		newbtn.GMODE = GAMEMODES[sus]["gamemode"]
+		newbtn.CHALLENGE = false
 		newbtn.MODGAME = null
-
 		$Control/Panel/ScrollContainer/VBoxContainer.add_child(newbtn)
 		
 	for susgame in MODDED_GAMEMODES.size():
@@ -60,10 +80,9 @@ func _ready() -> void:
 		newbtn.GMDESC = MODDED_GAMEMODES[susgame]["desc"]
 		newbtn.SCENE = "res://game-mod.tscn"
 		newbtn.MODGAME = susgame
+		newbtn.CHALLENGE = false
 		newbtn.GMODE = -1
-		
 		$Control/Panel/ScrollContainer/VBoxContainer.add_child(newbtn)
-		pass
 	if not transition.imfinished.is_connected(Global.got_finishedsign):
 		transition.imfinished.connect(Global.got_finishedsign)
 
@@ -88,6 +107,14 @@ func _on_play_button_pressed() -> void:
 		pass
 	else:
 		GamemodeManager.MODGAME = MODDED_GAMEMODES[MODGAME].duplicate(true)
+	# HACK -- 31/01/26
+	GamemodeManager.GAMEMODEINFO = {
+			"scene": GMCHANGE_TO,
+			"gamemode": GamemodeManager.GAMEMODE,
+		}
+
+	
+	#print("gamemode info: " + str(GamemodeManager.GAMEMODEINFO))	
 	get_tree().change_scene_to_file(GMCHANGE_TO)
 	
 func change_info():

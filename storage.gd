@@ -20,8 +20,8 @@ func _ready() -> void:
 		for aim in my_aims:
 			# print(aim)
 			var stritem = STORAGEITEM.instantiate()
-			stritem.Iicon = aim["sprite"]
-			stritem.Ititle = aim["name"]
+			stritem.Iicon = str(aim["sprite"])
+			stritem.Ititle = str(aim["name"])
 			
 			$CanvasLayer/ScrollContainer/VBoxContainer/GridContainer.add_child(stritem)
 		

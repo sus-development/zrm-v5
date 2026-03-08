@@ -32,13 +32,105 @@ const isDEMO = true # Данная настройка отключает маг�
 const SAVE_PATH = "user://save.cfg"
 var CONFIG = ConfigFile.new()
 var KT_URL = "https://kteam.veliona.no/"
+var WEAPONS = [
+	{
+		"name": tr("$starterpistol"),
+		"id": 1,
+		"class": "sidearm",
+		"delay": 1,
+		"automatic": false,
+		"bullets": 12,
+		"left_bullets": 12,
+		"zapas_bullets": 48,
+		"icon": "res://Resources/ui_stuff_lol/weapon_starterpistol.png",
+		"incremental_reload": false,
+		"increment_sound": "res://Sound/shotgun_increment",
+		"incremental_minusroundonreload": false,
+		"increment_delay": 0,
+		"type": "gun",
+		"sway": 0.07,
+		"weight": 0.26,
+		"soundondelay": false,
+		"delaysound": "res://Sound/shotgun_cycle.wav",
+		"sound": "res://Sound/pistol.wav",
+	},
+	{
+		"name": tr("$startermp"),
+		"id": 2,
+		"class": "primary",
+		"delay": 0.35,
+		"automatic": true,
+		"bullets": 30,
+		"left_bullets": 30,
+		"zapas_bullets": 30,
+		"icon": "res://Resources/ui_stuff_lol/weapon_startermp.png",
+		"incremental_reload": false,
+		"increment_sound": "res://Sound/shotgun_increment",
+		"incremental_minusroundonreload": false,
+		"increment_delay": 0,
+		"type": "gun",
+		"sway": 0.09,
+		"weight": 0.34,
+		"soundondelay": false,
+		"delaysound": "res://Sound/shotgun_cycle.wav",
+		"sound": "res://Sound/pistol.wav",
+	},
+	{
+		"name": tr("$hegrenade"),
+		"id": 3,
+		"class": "utility",
+		"delay": 1,
+		"automatic": false,
+		"bullets": 1,
+		"left_bullets": 1,
+		"zapas_bullets": 4,
+		"icon": "res://Resources/ui_stuff_lol/weapon_hegrenade.png",
+		"incremental_reload": false,
+		"increment_sound": "res://Sound/shotgun_increment",
+		"incremental_minusroundonreload": false,
+		"increment_delay": 0,
+		"type": "grenade",
+		"sway": 0,
+		"weight": 0.08,
+		"soundondelay": false,
+		"delaysound": "res://Sound/shotgun_cycle.wav",
+		"sound": "",
+	},
+	{
+		"name": tr("$basicshotgun"),
+		"id": 4,
+		"class": "primary",
+		"delay": 2.5,
+		"automatic": false,
+		"bullets": 6,
+		"left_bullets": 6,
+		"zapas_bullets": 24,
+		"icon": "res://Resources/ui_stuff_lol/weapon_basicshotgun.png",
+		"incremental_reload": true,
+		"increment_sound": "res://Sound/shotgun_increment",
+		"incremental_minusroundonreload": false,
+		"increment_delay": 0.35,
+		"type": "shotgun",
+		"sway": 0.15,
+		"weight": 0.40,
+		"soundondelay": true,
+		"delaysound": "res://Sound/shotgun_cycle.wav",
+		"sound": "res://Sound/shotgun.wav",
+	},
+]
+var ALLWEAPONS = []
+var SAVED_WEAPONS = []
+var EQUIPPED_WEAPONS = []
+
 
 # Переменные
 var BGID
 var FROM = 0
 var ZCOINS = 0
 var CURRENT_AIM = preload("res://Resources/aims/default.png")
-
+var GAYPAD_AIDS = 1 # причем тут aids? ну, типа короче типа я хотел сначала gaypad_speed, ну типа спид, а спид по английски это aids вот типа шутка да хазвъзахвзахвзахвза
+var CONTROLLER_CONNECTED = false
+var weap_chng_btn
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("fullscreenkey"):
@@ -51,6 +143,11 @@ func _input(event: InputEvent) -> void:
 	
 func _ready() -> void:
 	CONFIG.load(SAVE_PATH)
+	
+	ALLWEAPONS = []	
+	for i in WEAPONS.size():
+		var saveweaponarray = {"id": WEAPONS[i]["id"], "class": WEAPONS[i]["class"]}
+		ALLWEAPONS.append(saveweaponarray)	
 	if !CONFIG.get_value("settings", "lang"):
 		TranslationServer.set_locale("en")
 	else:
@@ -64,13 +161,32 @@ func _ready() -> void:
 		
 	if CONFIG.get_value("settings", "fullscreen"):
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
-		FULLSCREEN = CONFIG.get_value("settings", "fullscreen")	
+		FULLSCREEN = CONFIG.get_value("settings", "fullscreen")
+		
+	if CONFIG.get_value("settings", "gamepad_sens"):
+		GAYPAD_AIDS = CONFIG.get_value("settings", "gamepad_sens")
 		
 	if CONFIG.get_value("save", "zcoins"):
 		ZCOINS = CONFIG.get_value("save", "zcoins")
 		
+	if CONFIG.get_value("items", "weapons"):
+		SAVED_WEAPONS = CONFIG.get_value("items", "weapons")
+	else:
+		SAVED_WEAPONS.append(ALLWEAPONS[0])
 		
+	for weapon in SAVED_WEAPONS.size():
+		for allweapons in WEAPONS.size():
+			if SAVED_WEAPONS[weapon]["id"] == WEAPONS[allweapons]["id"]:
+				#print("yeee" + str(weapon)+ " " + str(allweapons))
+				EQUIPPED_WEAPONS.append(WEAPONS[allweapons])
+			
+	# tf2 reference ALERT
+	# NOTE: я скомпилированную игру не могу запустить, надо закомментировать rsiughdsugjh
+#	if !FileAccess.file_exists("res://_IMPORTANT_IMAGE_DONT_DELETE_INACHE_PISEC!!.jpg"):
+#		OS.alert("Игра обнаружила отсутствие самого важного файла. Игра больше не запустится. Наверное.\nВерните файл на место и не трогайте его ему страшно вообще капец.", "Aw, snap")
+#		OS.crash("Fatal error")
 		
+
 # полезная функция™
 func check(в_рот_мне_ноги: bool):
 	if в_рот_мне_ноги:

@@ -22,7 +22,7 @@ func load_mods() -> void:
 		var json = JSON.new()
 		var tmp_mod = json.parse_string(file.get_as_text())
 		
-		print(str(tmp_mod))
+		#print(str(tmp_mod))
 		
 		if tmp_mod == null:
 			var modpath = "user://mods/" + MODSLIST[sus]
@@ -43,8 +43,8 @@ func load_mods() -> void:
 		
 		# 03/12/25 - когда там в последний раз модлоадер обновлялся? 
 		
-		print("MOD GAMEMODES:")
-		print(MODGAMEMODES)
+		#print("MOD GAMEMODES:")
+		#print(MODGAMEMODES)
 		
 		print("--")
 		
@@ -65,24 +65,28 @@ func _process(delta: float) -> void:
 	pass
 
 func get_mod_img(path):
-	var file = FileAccess.open(path, FileAccess.READ)
-	if not file:
-		return ModLoader.MOD_IMG_ERROR
-
-	var image_data = file.get_buffer(file.get_length())
-	file.close()
-
-	var image = Image.new()
-	var error: Error
-	if path.get_extension().to_lower() == "png":
-		error = image.load_png_from_buffer(image_data)
-	elif path.get_extension().to_lower() in ["jpg", "jpeg"]:
-		error = image.load_jpg_from_buffer(image_data)
+	if path.begins_with("res://"):
+		var texture = ResourceLoader.load(path)
+		return texture
 	else:
-		return ModLoader.MOD_IMG_ERROR
+		var file = FileAccess.open(path, FileAccess.READ)
+		if not file:
+			return ModLoader.MOD_IMG_ERROR
 
-	if error != OK:
-		return ModLoader.MOD_IMG_ERROR
+		var image_data = file.get_buffer(file.get_length())
+		file.close()
 
-	var texture = ImageTexture.create_from_image(image)
-	return texture
+		var image = Image.new()
+		var error: Error
+		if path.get_extension().to_lower() == "png":
+			error = image.load_png_from_buffer(image_data)
+		elif path.get_extension().to_lower() in ["jpg", "jpeg"]:
+			error = image.load_jpg_from_buffer(image_data)
+		else:
+			return ModLoader.MOD_IMG_ERROR
+
+		if error != OK:
+			return ModLoader.MOD_IMG_ERROR
+
+		var texture = ImageTexture.create_from_image(image)
+		return texture

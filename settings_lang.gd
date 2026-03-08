@@ -2,7 +2,7 @@ extends OptionButton
 
 
 var langs
-const langnames = ["Беларуская", "中文", "English", "Русский", "Español", "Suomi", "Bielaruskaja lacinka", "Polski", "🦲 (emoji)",]
+const langnames = ["Беларуская", "中文", "English", "Русский", "Español", "Suomi", "Bielaruskaja lacinka", "Polski", "🦲 (emoji)", "Latviešu", "Russkiǐ"]
 const langtooltips = [
 	"Адно з галоўных новаўвядзенняў ZR 2.0 гэта ЛАКАЛІЗАЦЫЯ! Вы можаце змагацца з зомбі без моўнага бар'ера! УРА!",
 	"ZR 2.0 的主要新功能之一是本地化！您可以在没有语言障碍的情况下与僵尸战斗！耶",
@@ -11,8 +11,10 @@ const langtooltips = [
 	"Una de las principales novedades de ZR 2.0 es ¡La LOCALIZACIÓN! ¡Podrás luchar contra zombis sin la barrera del idioma! ¡YAY!",
 	"Yksi ZR 2.0:n tärkeimmistä innovaatioista on LOKALISAATIO! Voit taistella zombeja vastaan ​​ilman kielimuuria! HURRAA!",
 	"Adno z haloŭnych novaŭviadzieńniaŭ ZR 2.0 heta LAKALIZACYJa! Vy možacie zmahacca z zombi biez moŭnaha barjera! URA!",
-	"PL PLACEHOLDER",
+	"Jedną z głównych nowości ZR 2.0 jest LOKALIZACJA! Możesz walczyć z zombie bez bariery językowej! HURA!",
 	"1⃣ 👑 💡 💧 2⃣.0⃣ 🔗 ❗ 👆 💪 ⚔ 🧟‍♂ 🍵 🇪🇸 🚧 ❗ 👏 ❗",
+	"Viena no galvenajām ZR 2.0 jaunajām funkcijām ir LOKALIZĀCIJA! Jūs varat cīnīties ar zombijiem bez valodas barjeras! URA!",
+	"Одно из главных нововеденний ZR 2.0 это ЛОКАЛИЗАЦИЯ! Вы можете сражаться с зомби без языкового барьера! УРА! (LR)",
 ]
 
 func _ready() -> void:

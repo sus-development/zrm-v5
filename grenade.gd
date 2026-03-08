@@ -14,6 +14,7 @@ func _ready() -> void:
 	$PlayerDamageArea.monitoring = false
 	var dist = global_position.distance_to(target)
 	var tween = create_tween()
+	rotation = randf_range(0, 360)
 	tween.tween_property(self, "global_position", target, (dist*1.1)/SPEED).set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_OUT)
 	await tween.finished
 	var tween2 := create_tween()
