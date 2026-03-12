@@ -29,6 +29,7 @@ var WEAPONHINTS = true
 @onready var GAME = "res://gamemode.tscn"
 @onready var SETTINGS = "res://settings.tscn"
 const isDEMO = true # Данная настройка отключает магазин, склад и список модов Онлайн, так-как оно не готово (онлайн моды я ещё апи не сделал ну я и лох вообще)
+var devMode = false
 
 #Конфиги
 const SAVE_PATH = "user://save.cfg"
@@ -142,6 +143,13 @@ func _input(event: InputEvent) -> void:
 		else:
 			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
 			FULLSCREEN = false
+	if event.is_action_pressed("devToggle"):
+		devMode = !devMode
+		CONFIG.set_value("developer", "enabled", devMode)
+		CONFIG.save(SAVE_PATH)
+		OS.alert("DevMode Enabled: " + str(devMode))
+			
+			
 	
 func _ready() -> void:
 	CONFIG.load(SAVE_PATH)
@@ -181,7 +189,8 @@ func _ready() -> void:
 			if SAVED_WEAPONS[weapon]["id"] == WEAPONS[allweapons]["id"]:
 				#print("yeee" + str(weapon)+ " " + str(allweapons))
 				EQUIPPED_WEAPONS.append(WEAPONS[allweapons])
-			
+	
+	devMode = CONFIG.get_value("developer", "enabled", false)
 	# tf2 reference ALERT
 	# NOTE: я скомпилированную игру не могу запустить, надо закомментировать rsiughdsugjh
 #	if !FileAccess.file_exists("res://_IMPORTANT_IMAGE_DONT_DELETE_INACHE_PISEC!!.jpg"):
